@@ -4,14 +4,19 @@ State ElevatorState = INITIAL_STATE;
 global HARDWARE_MOVEMENT DrivingDirection;
 int nextFloor;
 list 
-
+list<FloorOrder> FloorOrders;
+//please change list and names maybe
 list<FloorOrder> readOrders() {
-    list<FloorOrder> FloorOrders;
+    list<FloorOrder> F_O;
     for (int i = 0; i =< HARDWARE_NUMBER_OF_FLOORS; i++) {
-        if (hardware_read_order(i, HARDWARE_ORDER_DOWN)) {
-            
+        for (int j = 1, j =< 3; j++) {
+            if (hardware_read_order(i, j)) {
+                FloorOrder f = {i,j};
+                F_O.append(f);
+            }
         }
     }
+    return F_O;
 }
 
 
@@ -47,14 +52,22 @@ switch(ElevatorState) {
         break;
 
     case IDLE:
-
+        DrivingDirection = HARDWARE_MOVEMENT_STOP;
+        hardware_command_movement(DrivingDirection);
+        int pollingSensors = 1;
+        while(pollingSensors){
+            FloorOrders = readOrders();
+            if(hardware_read_floor_sensor(nextFloor))
+        }
         break;
+        
 
     case DRIVE_DOWN:
         DrivingDirection = HARDWARE_MOVEMENT_DOWN;
         hardware_command_movement(DrivingDirection);
         int pollingSensors = 1;
         while(pollingSensors) {
+            FloorOrders = readOrders();
             if (hardware_read_floor_sensor(nextFloor)) {
                 ElevatorState = IDLE;
                 pollingSensors = 0;
@@ -63,6 +76,16 @@ switch(ElevatorState) {
         break;
 
     case DRIVE_UP:
+            DrivingDirection = HARDWARE_MOVEMENT_UP;
+        hardware_command_movement(DrivingDirection);
+        int pollingSensors = 1;
+        while(pollingSensors) {
+            FloorOrders = readOrders();
+            if (hardware_read_floor_sensor(nextFloor)) {
+                ElevatorState = IDLE;
+                pollingSensors = 0;
+            }
+        }
         break;
     
     case STOP:
