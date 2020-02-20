@@ -3,15 +3,16 @@
 #include <signal.h>
 #include <time.h>
 #include "hardware.h"
+#include "LinkedList.h"
 
 State ElevatorState;
-global HARDWARE_MOVEMENT drivingDirection;
-global int goalFloor;
-global int currentFloor;
-list<FloorOrder> FloorOrders;
+HARDWARE_MOVEMENT drivingDirection;
+int goalFloor;
+int currentFloor;
+struct Node* FloorOrders;
 
 
-typdef struct {
+typedef struct {
     int floor;
     HardwareOrder orderType;
 } FloorOrder;
@@ -29,6 +30,10 @@ int timer_expired(time_t start_time);
 
 time_t start_time();
 
-list<FloorOrder> readOrders();
+/**
+ * @brief Creates a linked list of all the buttons currently being pressed
+ * @return Head of the linked list
+ */
+struct Node* readOrders();
 
 int checkAllFloorSensors();

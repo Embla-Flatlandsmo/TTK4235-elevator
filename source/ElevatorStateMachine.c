@@ -62,15 +62,16 @@ switch(ElevatorState) {
 
             if (timer_expired(start_time) == 1) {
                 hardware_command_door_open(0);
-                if (currentFloor < goalFloor) {
+                if (currentFloor < goalFloor && goalFloor != -1) {
                     ElevatorState = DRIVE_DOWN;
                     break;
                 }
 
-                if (currentFloor > goalFloor) {
+                else if (currentFloor > goalFloor && goalFloor != -1) {
                     ElevatorState = DRIVE_UP;
                     break;
                 }
+
             }
         }
 
@@ -138,17 +139,18 @@ switch(ElevatorState) {
 
 
 //please change list and names maybe
-list<FloorOrder> readOrders() {
-    list<FloorOrder> F_O;
+struct Node* readOrders() {
+    deleteList(&FloorOrders);
+    struct Node* head = NULL;
     for (int i = 0; i =< HARDWARE_NUMBER_OF_FLOORS; i++) {
         for (int j = 1, j =< 3; j++) {
             if (hardware_read_order(i, j)) {
                 FloorOrder f = {i,j};
-                F_O.append(f);
+                push(&head, newNode(f));
             }
         }
     }
-    return F_O;
+    return head;
 }
 
 time_t start_time(){
