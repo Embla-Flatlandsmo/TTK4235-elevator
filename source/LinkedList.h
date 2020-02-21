@@ -13,11 +13,6 @@
  */
 struct Node *newNode(void* new_data);
 
-/**
- * @brief Deletes the entire list and frees up the memory.
- * @param head_ref Pointer to the head pointer.
- */
-void deleteList(struct Node** head_ref);
 
 /**
  * @brief Checks if the linked list is empty.
@@ -27,11 +22,34 @@ void deleteList(struct Node** head_ref);
 int isEmpty(struct Node** head_ref);
 
 /**
+ * @brief Deletes the entire list and frees up the memory.
+ * @param head_ref Pointer to the head pointer.
+ * @warning Does not delete the head pointer. This needs to be deleted manually.
+ */
+void deleteList(struct Node** head_ref);
+
+/**
  * @brief Pushes a new node to the front of the list.
  * @param head_ref Pointer to the head pointer.
  * @param new_data data to be contained in the new node.
  */
 void push(struct Node** head_ref, void* new_data);
+
+/**
+ * @brief Reads the data in the head of the list.
+ * @param head_ref Pointer to the head pointer.
+ * @return Value of the data in the head. -1 if the list is empty.
+ * @warning Does not delete the first node.
+ */
+void* readFirstNode(struct Node** head_ref);
+
+
+/**
+ * @brief Deletes the head node and sets the predecessor to 
+ * @param head_ref Pointer to the head pointer.
+ */
+void deleteFirstNode(struct Node** head_ref);
+
 
 /**
  * @brief Retrieves the node at the front of the list and deletes it.

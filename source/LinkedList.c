@@ -61,6 +61,23 @@ void push(struct Node** head_ref, void* new_data) {
 
 }
 
+void* readFirstNode(struct Node** head_ref) {
+    if (isEmpty(head_ref)) {
+        return -1;
+    } else {
+        return (*head_ref)->data;
+    }
+}
+
+
+void deleteFirstNode(struct Node** head_ref) {
+    if (*head_ref != NULL) {
+        struct Node* head = *head_ref;
+        (*head_ref) = (*head_ref)->next;
+        free(head);
+    }
+}
+
 void* pop(struct Node** head_ref) {
     //underflow condition
     if (*head_ref == NULL) {

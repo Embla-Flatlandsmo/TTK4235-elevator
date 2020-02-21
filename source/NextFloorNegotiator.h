@@ -3,6 +3,7 @@
 #include <signal.h>
 #include "hardware.h"
 #include "ElevatorStateMachine.h"
+#include "LinkedList.h"
 
 struct Node* QueueUp;
 struct Node* QueueDown;
