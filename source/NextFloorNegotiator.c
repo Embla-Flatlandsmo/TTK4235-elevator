@@ -2,10 +2,20 @@
 
 
 int getGoalFloor() {
-    if (drivingDirection == HARDWARE_MOVEMENT_UP && !isEmpty(&QueueUp)) {
-        return *(int*)pop(&QueueUp);
-    } else if (drivingDirection == HARDWARE_MOVEMENT_DOWN && !isEmpty(&QueueDown)) {
-        return *(int*)pop(&QueueDown);
+    if (drivingDirection == HARDWARE_MOVEMENT_UP) {
+        if (!isEmpty(&QueueUp)) {                                   //There are more orders in the upwards queue
+            return *(int*)readFirstNode(&QueueUp);
+        } else if (isEmpty(&QueueUp) && !isEmpty(&QueueDown)){      //We are at the end of the upwards queue and there are orders in the downwards queue
+            drivingDirection = HARDWARE_MOVEMENT_DOWN;              //Change direction and start reading from the other queue
+            return *(int*)readFirstNode(&QueueDown);
+        }
+    } else if (drivingDirection == HARDWARE_MOVEMENT_DOWN) {
+        if (!isEmpty(&QueueDown)) {                                 //There are more orders in the downward direction
+           return *(int*)readFirstNode(&QueueDown);            
+        } else if (isEmpty(&QueueDown) && !isEmpty(&QueueUp)) {     //we are at the end of the queue
+            drivingDirection = HARDWARE_MOVEMENT_UP;                //Change direction and start reading from the other queue
+            return *(int*)readFirstNode(&QueueUp);
+        }
     } else {
         return -1;
     }
