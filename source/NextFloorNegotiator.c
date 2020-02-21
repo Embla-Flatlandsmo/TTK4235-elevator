@@ -2,11 +2,11 @@
 
 
 int getGoalFloor() {
+    checkifTurn();
     if (drivingDirection == HARDWARE_MOVEMENT_UP) {
         if (!isEmpty(&QueueUp)) {                                   //There are more orders in the upwards queue
             return *(int*)readFirstNode(&QueueUp);
         } else if (isEmpty(&QueueUp) && !isEmpty(&QueueDown)){      //We are at the end of the upwards queue and there are orders in the downwards queue
-            drivingDirection = HARDWARE_MOVEMENT_DOWN;              //Change direction and start reading from the other queue
             return *(int*)readFirstNode(&QueueDown);
         }
     } else if (drivingDirection == HARDWARE_MOVEMENT_DOWN) {
@@ -21,6 +21,33 @@ int getGoalFloor() {
     }
 }
 
+void checkifTurn() {
+    if (drivingDirection == HARDWARE_MOVEMENT_UP) {
+        if (isEmpty(&QueueUp) && !isEmpty(&QueueDown)) {
+            turnElevator(HARDWARE_MOVEMENT_DOWN);
+        }
+    } else if (drivingDirection == HARDWARE_MOVEMENT_DOWN) {
+        if (isEmpty(&QueueDown) && !isEmpty(&QueueUp)){
+            turnElevator(HARDWARE_MOVEMENT_DOWN);
+        }
+    }
+}
+
+
+void turnElevator(HardwareMovement upOrDown) {
+    if (upOrDown == HARDWARE_MOVEMENT_UP) {
+        drivingDirection = HARDWARE_MOVEMENT_UP;
+        while (!isEmpty(&NextQueueUp)) {
+            ascendingInsert(&QueueUp, pop(&NextQueueUp));
+        }
+    } else if (upOrDown == HARDWARE_MOVEMENT_DOWN) {
+        drivingDirection = HARDWARE_MOVEMENT_DOWN;
+        while (!isEmpty(&NextQueueDown)) {
+            descendingInsert(&QueueDown, pop(&NextQueueDown));
+        }
+    }
+}
+
 void newFloorOrder(struct Node** head_ref) {
     //get the front of the list from readOrders()
     FloorOrder tempOrder = *(FloorOrder*)pop(head_ref);
@@ -28,16 +55,34 @@ void newFloorOrder(struct Node** head_ref) {
     
     //sort the entry into its own list according to what type of order it is
     if (tempOrder.orderType == HARDWARE_ORDER_DOWN) {
-        descendingInsert(&QueueDown, currentNode);
-    }
+        if (tempOrder.floor > currentFloor) {
+            descendingInsert(&NextQueueDown, currentNode); //if someone wants to go down but is above the current floor, we put it in a different queue
+        } else {
+            descendingInsert(&QueueDown, currentNode);
+        }
+
+    } //send help plz////////////////////////////////////////////////////////////////////////////
     else if (tempOrder.orderType == HARDWARE_ORDER_UP) {
-        ascendingInsert(&QueueUp, currentNode);
+        if (tempOrder.floor < currentFloor && drivingDirection == HARDWARE_MOVEMENT_UP) {
+            ascendingInsert(&NextQueueUp, currentNode);
+        } else {
+            ascendingInsert(&QueueUp, currentNode);            
+        }
+
     }
     else if (tempOrder.orderType == HARDWARE_ORDER_INSIDE) {
-        if (currentFloor < tempOrder.floor) {
-            ascendingInsert(&QueueUp, currentNode);
+        if (drivingDirection == HARDWARE_MOVEMENT_UP) {
+            if (tempOrder.floor < currentFloor) {
+                ascendingInsert(&QueueUp, currentNode);                
+            } else {
+                descendingInsert(&QueueDown, currentNode);
+            }
+
         }
-        else if (currentFloor > tempOrder.floor) {
+        else if (drivingDirection == HARDWARE_MOVEMENT_DOWN) {
+            if (tempOrder.floor > currentFloor) {
+                
+            }
             descendingInsert(&QueueDown, currentNode);
         }
     }

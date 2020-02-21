@@ -91,6 +91,9 @@ void ascendingInsert(struct Node** head_ref, struct Node* new_node)
         while (current->next != NULL && current->next->data < new_node->data) {
             current = current->next;
         }
+        if (current->next != NULL && current->data == current->next->data) {  //This means that there is already an order like it in the list
+            return;
+        }
         new_node->next = current->next;
         current->next = new_node;
     }
@@ -109,6 +112,10 @@ void descendingInsert(struct Node** head_ref, struct Node* new_node)
         while (current->next != NULL && current->next->data > new_node->data) {
             current = current->next;
         }
+        if (current->next != NULL && current->data == current->next->data) {
+            return;
+        }
+
         new_node->next = current->next;
         current->next = new_node;
     }

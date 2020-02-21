@@ -36,4 +36,13 @@ time_t start_time();
  */
 struct Node* readOrders();
 
+/**
+ * @brief Checks all floor sensors.
+ * @return Floor number if currently in a floor, 0 otherwise
+ */
 int checkAllFloorSensors();
+
+/**
+ * @brief Clears all order lights.
+ */
+static void clear_all_order_lights();
