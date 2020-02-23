@@ -3,8 +3,13 @@
  * @brief Data structure for linked lists.
  */
 
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
+
 #include <stdlib.h>
 #include <stdio.h>
+#include "hardware.h"
+
 
 /**
  * @brief Struct that gives which floor is being ordered, and which type of order it is.
@@ -20,7 +25,7 @@ typedef struct {
  * @param new_data Data to be contained in node.
  * @return Pointer to the new node.
  */
-struct Node *newNode(FloorOrder new_data);
+struct Node *newNode(void* new_data);
 
 
 /**
@@ -42,7 +47,7 @@ void deleteList(struct Node** head_ref);
  * @param head_ref Pointer to the head pointer.
  * @param new_data data to be contained in the new node.
  */
-void push(struct Node** head_ref, FloorOrder new_data);
+void push(struct Node** head_ref, void* new_data);
 
 /**
  * @brief Reads the data in the head of the list.
@@ -82,3 +87,5 @@ void ascendingInsert(struct Node** head_ref, struct Node* new_node);
  * @warning Only use nodes with data types that can be sorted such as floats, ints or char.
  */
 void descendingInsert(struct Node** head_ref, struct Node* new_node); 
+
+#endif // LINKEDLIST_H

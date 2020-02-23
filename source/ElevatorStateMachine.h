@@ -1,21 +1,19 @@
+#ifndef ELEVATORSTATEMACHINE_H
+#define ELEVATORSTATEMACHINE_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
 #include <time.h>
 #include "hardware.h"
+#include "NextFloorNegotiator.h"
 #include "LinkedList.h"
 
-State ElevatorState;
-HARDWARE_MOVEMENT drivingDirection;
-int goalFloor;
-int currentFloor;
+HardwareMovement* drivingDirection;
+int* goalFloor;
+int* currentFloor;
 struct Node* FloorOrders;
-
-
-typedef struct {
-    int floor;
-    HardwareOrder orderType;
-} FloorOrder;
+int pollingSensors;
 
 typedef enum {
     INITIAL_CHECK,
@@ -26,6 +24,8 @@ typedef enum {
     STOP
 } State;
 
+void stateMachine(State currentState);
+
 int timer_expired(time_t start_time);
 
 time_t start_time();
@@ -34,7 +34,7 @@ time_t start_time();
  * @brief Creates a linked list of all the buttons currently being pressed
  * @return Head of the linked list
  */
-struct Node* readOrders();
+void readOrders();
 
 /**
  * @brief Checks all floor sensors.
@@ -45,4 +45,6 @@ int checkAllFloorSensors();
 /**
  * @brief Clears all order lights.
  */
-static void clear_all_order_lights();
+void clear_all_order_lights();
+
+#endif //ELEVATORSTATEMACHINE_H

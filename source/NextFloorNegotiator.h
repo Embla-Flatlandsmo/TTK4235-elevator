@@ -1,7 +1,11 @@
+#ifndef NEXTFLOORNEGOTIATOR_H
+#define NEXTFLOORNEGOTIATOR_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
 #include "hardware.h"
+#include "LinkedList.h"
 #include "ElevatorStateMachine.h"
 
 struct Node* QueueUp;
@@ -37,3 +41,4 @@ void clearAllQueues();
  */
 void newFloorOrder(struct Node** head_ref);
 
+#endif // NEXTFLOORNEGOTIATOR_H

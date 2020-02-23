@@ -4,7 +4,7 @@
 //Linked list node
 struct Node 
 { 
-    void *data; 
+    void* data; 
     struct Node* next; 
 }; 
 
@@ -20,6 +20,7 @@ struct Node *newNode(void* new_data)
   
     return new_node; 
 } 
+
 
 int isEmpty(struct Node** head_ref) {
     struct Node* head = *head_ref;
@@ -61,10 +62,25 @@ void push(struct Node** head_ref, void* new_data) {
 
 }
 
+void* readFirstNode(struct Node** head_ref) {
+    return (*head_ref)->data;
+}
+
+void deleteFirstNode(struct Node** head_ref) {
+    if (*head_ref == NULL) {
+        return;
+    }
+
+    struct Node* head = *head_ref;
+    (*head_ref) = (*head_ref)->next;
+    free(head);
+    return;
+}
+
 void* pop(struct Node** head_ref) {
     //underflow condition
     if (*head_ref == NULL) {
-        return -1;
+        return (void*)-1;
     }
 
     struct Node* head = *head_ref;
