@@ -1,15 +1,10 @@
 #include "LinkedList.h"
 
 
-//Linked list node
-struct Node 
-{ 
-    void* data; 
-    struct Node* next; 
-}; 
+
 
 //A utility function to create a new node */
-struct Node *newNode(void* new_data) 
+struct Node *newNode(FloorOrder new_data) 
 { 
     //allocate node
     struct Node* new_node = (struct Node*) malloc(sizeof(struct Node)); 
@@ -46,7 +41,7 @@ void deleteList(struct Node** head_ref) {
     *head_ref = NULL;
 }
 
-void push(struct Node** head_ref, void* new_data) {
+void push(struct Node** head_ref, FloorOrder new_data) {
 
     //Allocate the new Node in the heap and set its data
     struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
@@ -62,7 +57,7 @@ void push(struct Node** head_ref, void* new_data) {
 
 }
 
-void* readFirstNode(struct Node** head_ref) {
+FloorOrder readFirstNode(struct Node** head_ref) {
     return (*head_ref)->data;
 }
 
@@ -77,14 +72,15 @@ void deleteFirstNode(struct Node** head_ref) {
     return;
 }
 
-void* pop(struct Node** head_ref) {
+FloorOrder pop(struct Node** head_ref) {
     //underflow condition
     if (*head_ref == NULL) {
-        return (void*)-1;
+        FloorOrder f = {-1,1}
+        return f;
     }
 
     struct Node* head = *head_ref;
-    void* result = head->data; //pull out data before node is deleted
+    FloorOrder result = head->data; //pull out data before node is deleted
 
     (*head_ref) = (*head_ref)->next; //unlink head node for the caller
 
@@ -98,16 +94,16 @@ void ascendingInsert(struct Node** head_ref, struct Node* new_node)
 {
     struct Node* current;
     //Special cases for head (insert new node before head, or if this is the first insert)
-    if (*head_ref == NULL || (*head_ref)->data >= new_node->data) {
+    if (*head_ref == NULL || (*head_ref)->data.floor > new_node->data.floor) {
         new_node->next = *head_ref;
         *head_ref = new_node;
     } else {
         //Locate node before point of insertion
         current = *head_ref;
-        while (current->next != NULL && current->next->data < new_node->data) {
+        while (current->next != NULL && current->next->data.floor < new_node->data.floor) {
             current = current->next;
         }
-        if (current->next != NULL && current->data == current->next->data) {  //This means that there is already an order like it in the list
+        if (current->next != NULL && current->data.floor == current->next->data.floor) {  //This means that there is already an order like it in the list
             return;
         }
         new_node->next = current->next;
@@ -119,16 +115,16 @@ void descendingInsert(struct Node** head_ref, struct Node* new_node)
 {
     struct Node* current;
     //Special cases for head (insert new node before head, or if this is the first insert)
-    if (*head_ref == NULL || (*head_ref)->data <= new_node->data) {
+    if (*head_ref == NULL || (*head_ref)->data.floor < new_node->data.floor) {
         new_node->next = *head_ref;
         *head_ref = new_node;
     } else {
         //Locate node before point of insertion
         current = *head_ref;
-        while (current->next != NULL && current->next->data > new_node->data) {
+        while (current->next != NULL && current->next->data.floor > new_node->data.floor) {
             current = current->next;
         }
-        if (current->next != NULL && current->data == current->next->data) {
+        if (current->next != NULL && current->data.floor == current->next->data.floor) {
             return;
         }
 

@@ -37,16 +37,16 @@ int getGoalFloor() {
     checkifTurn();
     if (*drivingDirection == HARDWARE_MOVEMENT_UP) {
         if (!isEmpty(&QueueUp)) {                                   //There are more orders in the upwards queue
-            return *(int*)readFirstNode(&QueueUp);
+            return readFirstNode(&QueueUp).floor;
         } else if (isEmpty(&QueueUp) && !isEmpty(&QueueDown)){      //We are at the end of the upwards queue and there are orders in the downwards queue
-            return *(int*)readFirstNode(&QueueDown);
+            return readFirstNode(&QueueDown).floor;
         }
     } else if (*drivingDirection == HARDWARE_MOVEMENT_DOWN) {
         if (!isEmpty(&QueueDown)) {                                 //There are more orders in the downward direction
-           return *(int*)readFirstNode(&QueueDown);            
+           return readFirstNode(&QueueDown).floor;            
         } else if (isEmpty(&QueueDown) && !isEmpty(&QueueUp)) {     //we are at the end of the queue
             *drivingDirection = HARDWARE_MOVEMENT_UP;                //Change direction and start reading from the other queue
-            return *(int*)readFirstNode(&QueueUp);
+            return readFirstNode(&QueueUp).floor;
         }
     }
     
@@ -54,9 +54,13 @@ int getGoalFloor() {
 }
 
 void newFloorOrder(struct Node** head_ref) {
+
+    if ((*head_ref) == NULL) {
+        return;
+    }
     //get the front of the list from readOrders()
-    FloorOrder tempOrder = *(FloorOrder*)pop(head_ref);
-    struct Node* currentNode = newNode(&tempOrder.floor);
+    FloorOrder tempOrder = pop(head_ref);
+    struct Node* currentNode = newNode(tempOrder);
     
     //sort the entry into its own list according to what type of order it is
     if (tempOrder.orderType == HARDWARE_ORDER_DOWN) {
@@ -66,7 +70,7 @@ void newFloorOrder(struct Node** head_ref) {
             descendingInsert(&QueueDown, currentNode);
         }
 
-    } //send help plz////////////////////////////////////////////////////////////////////////////
+    }
     else if (tempOrder.orderType == HARDWARE_ORDER_UP) {
         if (tempOrder.floor < *currentFloor && *drivingDirection == HARDWARE_MOVEMENT_UP) {
             ascendingInsert(&NextQueueUp, currentNode);

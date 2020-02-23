@@ -19,13 +19,19 @@ typedef struct {
     HardwareOrder orderType;
 } FloorOrder;
 
+//Linked list node
+struct Node 
+{ 
+    FloorOrder data; 
+    struct Node* next; 
+}; 
 
 /**
  * @brief Utility function for creating a new node.
  * @param new_data Data to be contained in node.
  * @return Pointer to the new node.
  */
-struct Node *newNode(void* new_data);
+struct Node *newNode(FloorOrder new_data);
 
 
 /**
@@ -47,7 +53,7 @@ void deleteList(struct Node** head_ref);
  * @param head_ref Pointer to the head pointer.
  * @param new_data data to be contained in the new node.
  */
-void push(struct Node** head_ref, void* new_data);
+void push(struct Node** head_ref, FloorOrder new_data);
 
 /**
  * @brief Reads the data in the head of the list.
@@ -55,7 +61,7 @@ void push(struct Node** head_ref, void* new_data);
  * @return Value of the data in the head. -1 if the list is empty.
  * @warning Does not delete the first node.
  */
-void* readFirstNode(struct Node** head_ref);
+FloorOrder readFirstNode(struct Node** head_ref);
 
 
 /**
@@ -70,7 +76,7 @@ void deleteFirstNode(struct Node** head_ref);
  * @param head_ref Pointer to the head pointer.
  * @return -1 if list is empty, otherwise data contained in the node at the front of the list.
  */
-void* pop(struct Node** head_ref);
+FloorOrder pop(struct Node** head_ref);
 
 /**
  * @brief Inserts new node in ascending order (ex. 1->3->8)
