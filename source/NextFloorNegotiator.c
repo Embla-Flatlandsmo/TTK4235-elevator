@@ -1,105 +1,121 @@
 #include "NextFloorNegotiator.h"
 
-void turnElevator(HardwareMovement upOrDown) {
-    if (upOrDown == HARDWARE_MOVEMENT_UP) {
-        *drivingDirection = HARDWARE_MOVEMENT_UP;
-        while (!isEmpty(&NextQueueUp)) {
-            ascendingInsert(&QueueUp, pop(&NextQueueUp));
+static int up_queue[HARDWARE_NUMBER_OF_FLOORS];
+static int down_queue[HARDWARE_NUMBER_OF_FLOORS];
+
+void next_floor_negotiator_add_order(int floor, HardwareOrder order_type) {
+    switch(order_type) {
+        case HARDWARE_ORDER_UP:
+            up_queue[floor] = 1;
+            hardware_command_order_light(floor, HARDWARE_ORDER_UP, 1);
+            break;
+        case HARDWARE_ORDER_DOWN:
+            down_queue[floor] = 1;
+            hardware_command_order_light(floor, HARDWARE_ORDER_DOWN, 1);
+            break;
+        case HARDWARE_ORDER_INSIDE:
+            up_queue[floor] = 1;
+            down_queue[floor] = 1;
+            hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 1);
+            break;
+    }
+}
+
+void next_floor_negotiator_poll_sensors() {
+    for (int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
+        int up = hardware_read_floor_sensor(f, HARDWARE_ORDER_UP);
+        int inside = hardware_read_floor_sensor(f, HARDWARE_ORDER_INSIDE);
+        int down = hardware_read_floor_sensor(f, HARDWARE_ORDER_DOWN);
+
+        if (up) {
+            next_floor_negotiator_add_order(f, HARDWARE_ORDER_UP);
         }
-    } else if (upOrDown == HARDWARE_MOVEMENT_DOWN) {
-        *drivingDirection = HARDWARE_MOVEMENT_DOWN;
-        while (!isEmpty(&NextQueueDown)) {
-            descendingInsert(&QueueDown, pop(&NextQueueDown));
+
+        if (inside) {
+            next_floor_negotiator_add_order(f, HARDWARE_ORDER_INSIDE);
+        }
+        
+        if (down) {
+            next_floor_negotiator_add_order(f, HARDWARE_ORDER_DOWN);
+        }
+
         }
     }
 }
 
-void checkifTurn() {
-    if (*drivingDirection == HARDWARE_MOVEMENT_UP) {
-        if (isEmpty(&QueueUp) && !isEmpty(&QueueDown)) {
-            turnElevator(HARDWARE_MOVEMENT_DOWN);
-    		return;
+int next_floor_negotiator_order_above(int current_floor, HardwareMovement driving_direction) {
+    int* tmp_queue;
+
+    switch (driving_direction) {
+        case HARDWARE_MOVEMENT_UP:
+            tmp_queue = up_queue;
+            break;
+        case HARDWARE_MOVEMENT_DOWN:
+            tmp_queue = down_queue;
+            break;
+    }
+
+    for (int f = current_floor; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
+        if (tmp_queue[f]) {
+            free(tmp_queue);
+            return 1;
         }
-        else if (isEmpty(&QueueUp) && isEmpty(&QueueDown) && !isEmpty(&NextQueueUp)) {
-            turnElevator(HARDWARE_MOVEMENT_UP);
-            return;
-        }
-    } else if (*drivingDirection == HARDWARE_MOVEMENT_DOWN) {
-        if (isEmpty(&QueueDown) && !isEmpty(&QueueUp)){
-            turnElevator(HARDWARE_MOVEMENT_DOWN);
-        } else if (isEmpty(&QueueDown) && isEmpty(&QueueUp) && !isEmpty(&NextQueueDown)) {
-            turnElevator(HARDWARE_MOVEMENT_DOWN);
-        }
+    }
+    free(tmp_queue);
+    return 0;
+}
+
+void next_floor_negotiator_clear_queues() {
+    for (int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
+        hardware_command_order_light(f, HARDWARE_ORDER_DOWN, 0);
+        hardware_command_order_light(f, HARDWARE_ORDER_UP, 0);
+        hardware_command_order_light(f, HARDWARE_ORDER_INSIDE, 0);
+        up_queue[f] = 0;
+        down_queue[f] = 0;
     }
 }
 
-int getGoalFloor() {
-    checkifTurn();
-    if (*drivingDirection == HARDWARE_MOVEMENT_UP) {
-        if (!isEmpty(&QueueUp)) {                                   //There are more orders in the upwards queue
-            return readFirstNode(&QueueUp).floor;
-        } else if (isEmpty(&QueueUp) && !isEmpty(&QueueDown)){      //We are at the end of the upwards queue and there are orders in the downwards queue
-            return readFirstNode(&QueueDown).floor;
-        }
-    } else if (*drivingDirection == HARDWARE_MOVEMENT_DOWN) {
-        if (!isEmpty(&QueueDown)) {                                 //There are more orders in the downward direction
-           return readFirstNode(&QueueDown).floor;            
-        } else if (isEmpty(&QueueDown) && !isEmpty(&QueueUp)) {     //we are at the end of the queue
-            *drivingDirection = HARDWARE_MOVEMENT_UP;                //Change direction and start reading from the other queue
-            return readFirstNode(&QueueUp).floor;
+int next_floor_negotiator_at_next_floor(int next_floor) {
+    if (next_floor == -1) {
+        return 0;
+    }
+    if (hardware_read_floor_sensor(next_floor)) {
+        return 1;
+    }
+    return 0;
+}
+
+int next_floor_negotiator_get_next_floor(HardwareMovement driving_direction) {
+    int* tmp_queue;
+    switch (driving_direction) {
+        case HARDWARE_MOVEMENT_DOWN:
+            tmp_queue = down_queue;
+            break;
+        case HARDWARE_MOVEMENT_UP:
+            tmp_queue = up_queue;
+            break;
+    }
+    for (int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
+        if (tmp_queue[f]) {
+            return f;
         }
     }
-    
     return -1;
 }
 
-void newFloorOrder(struct Node** head_ref) {
-
-    if ((*head_ref) == NULL) {
-        return;
+void next_floor_negotiator_remove_order(int floor, HardwareMovement driving_direction) {
+    int* tmp_queue;
+    switch (driving_direction) {
+        case HARDWARE_MOVEMENT_UP:
+            hardware_command_order_light(floor, HARDWARE_ORDER_UP, 0);
+            hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 0);
+            tmp_queue = up_queue;
+            break;
+        case HARDWARE_MOVEMENT_DOWN:
+            hardware_command_order_light(floor, HARDWARE_ORDER_DOWN, 0);
+            hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 0);
+            tmp_queue = down_queue;
+            break;
     }
-    //get the front of the list from readOrders()
-    FloorOrder tempOrder = pop(head_ref);
-    struct Node* currentNode = newNode(tempOrder);
-    
-    //sort the entry into its own list according to what type of order it is
-    if (tempOrder.orderType == HARDWARE_ORDER_DOWN) {
-        if (tempOrder.floor > *currentFloor) {
-            descendingInsert(&NextQueueDown, currentNode); //if someone wants to go down but is above the current floor, we put it in a different queue
-        } else {
-            descendingInsert(&QueueDown, currentNode);
-        }
-
-    }
-    else if (tempOrder.orderType == HARDWARE_ORDER_UP) {
-        if (tempOrder.floor < *currentFloor && *drivingDirection == HARDWARE_MOVEMENT_UP) {
-            ascendingInsert(&NextQueueUp, currentNode);
-        } else {
-            ascendingInsert(&QueueUp, currentNode);            
-        }
-
-    }
-    else if (tempOrder.orderType == HARDWARE_ORDER_INSIDE) {
-        if (*drivingDirection == HARDWARE_MOVEMENT_UP) {
-            if (tempOrder.floor > *currentFloor) {
-                ascendingInsert(&QueueUp, currentNode);                
-            } else {
-                descendingInsert(&QueueDown, currentNode);
-            }
-        } else if (*drivingDirection == HARDWARE_MOVEMENT_DOWN) {
-            if (tempOrder.floor < *currentFloor) {
-                descendingInsert(&QueueDown, currentNode);
-            } else {
-                ascendingInsert(&QueueUp, currentNode);
-            }
-            descendingInsert(&QueueDown, currentNode);
-        }
-    }
-}
-
-void clearAllQueues() {
-    deleteList(&QueueUp);
-    deleteList(&NextQueueUp);
-    deleteList(&QueueDown);
-    deleteList(&NextQueueDown);
+    tmp_queue[f] = 0;
 }

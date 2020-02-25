@@ -8,37 +8,50 @@
 #include "LinkedList.h"
 #include "ElevatorStateMachine.h"
 
-struct Node* QueueUp;
-struct Node* QueueDown;
-struct Node* NextQueueUp;
-struct Node* NextQueueDown;
-/**
- * @brief Figures out which floor to go to next, also uses checkifTurn to decide if the elevator has to turn or not.
- * @return -1 if there are no floor orders, otherwise it returns the next floor.
+
+/** 
+ * @brief Polls all the floor sensors and puts them in up_queue or down_queue
  */
-int getGoalFloor();
+void next_floor_negotiator_poll_sensors();
 
 /**
- * @brief Checks if the Elevator has to turn. Decides when to use @p turnElevator
+ * @brief Adds order to up_queue or down_queue. Used in poll_sensors.
+ * @param floor floor to be added to queue
+ * @param order_type order type to be added to queue
  */
-void checkifTurn();
+void next_floor_negotiator_add_orders(int floor, HardwareOrder order_type);
 
 /**
- * @brief Sets driving direction and moves the items from NextQueueUp/Down to QueueUp/Down
- * @param upOrDown decides whether to start driving up or down
+ * @brief Checks if the next order is above the current floor.
+ * @param current_floor elevator's current floor
+ * @param driving_direction elevator's driving direction
+ * @return 1 if next order is above, 0 if next order is below.
  */
-void turnElevator(HardwareMovement upOrDown);
-
-/**
- * @brief Clears all the queues (QueueUp, QueueDown, NextQueueUp, NextQueueDown). Used for STOP state.
- */
-void clearAllQueues();
+int next_floor_negotiator_order_above(int current_floor, HardwareMovement driving_direction);
 
 
 /**
- * @brief Takes the current floor orders from the state machine and puts them in the correct queues.
- * @param head_ref pointer to the head of the current floor orders being made.
+ * @brief sets all of up_queue and down_queue's entries to 0. Also sets lights to 0.
  */
-void newFloorOrder(struct Node** head_ref);
+void next_floor_negotiator_clear_queues();
 
-#endif // NEXTFLOORNEGOTIATOR_H
+/**
+ * @brief Checks if the elevator is at the goal floor.
+ * @param next_floor goal floor.
+ * @return 1 if elevator is at the goal floor, 0 otherwise.
+ */
+int next_floor_negotiator_at_next_floor(int next_floor);
+
+/**
+ * @brief Figures out which floor to go to next.
+ * @param driving_direction Elevator's current driving direction.
+ * @return -1 if there are no orders, floor number otherwise.
+ */
+int next_floor_negotiator_get_next_floor(HardwareMovement driving_direction);
+
+/**
+ * @brief Removes an order from the up_queue or down_queue
+ * @param floor Floor to be removed
+ * @param driving_direction Elevator's driving direction.
+ */
+void next_floor_negotiator_remove_order(int floor, HardwareMovement driving_direction)
