@@ -1,4 +1,4 @@
-SOURCES := NextFloorNegotiator.c main.c
+SOURCES := LinkedList.c NextFloorNegotiator.c ElevatorStateMachine.c main.c
 
 SOURCE_DIR := source
 BUILD_DIR := build

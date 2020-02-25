@@ -6,12 +6,13 @@
 #include <signal.h>
 #include "hardware.h"
 #include "LinkedList.h"
+#include "ElevatorStateMachine.h"
 
 
 /** 
  * @brief Polls all the floor sensors and puts them in up_queue or down_queue
  */
-void next_floor_negotiator_poll_order_sensors();
+void next_floor_negotiator_poll_sensors();
 
 /**
  * @brief Adds order to up_queue or down_queue. Used in poll_sensors.
@@ -53,6 +54,4 @@ int next_floor_negotiator_get_next_floor(HardwareMovement driving_direction);
  * @param floor Floor to be removed
  * @param driving_direction Elevator's driving direction.
  */
-void next_floor_negotiator_remove_order(int floor, HardwareMovement driving_direction);
-
-#endif
+void next_floor_negotiator_remove_order(int floor, HardwareMovement driving_direction)

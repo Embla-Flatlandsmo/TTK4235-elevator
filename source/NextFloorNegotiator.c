@@ -18,16 +18,14 @@ void next_floor_negotiator_add_order(int floor, HardwareOrder order_type) {
             down_queue[floor] = 1;
             hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 1);
             break;
-        default:
-            break;
     }
 }
 
-void next_floor_negotiator_poll_order_sensors() {
+void next_floor_negotiator_poll_sensors() {
     for (int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
-        int up = hardware_read_order(f, HARDWARE_ORDER_UP);
-        int inside = hardware_read_order(f, HARDWARE_ORDER_INSIDE);
-        int down = hardware_read_order(f, HARDWARE_ORDER_DOWN);
+        int up = hardware_read_floor_sensor(f, HARDWARE_ORDER_UP);
+        int inside = hardware_read_floor_sensor(f, HARDWARE_ORDER_INSIDE);
+        int down = hardware_read_floor_sensor(f, HARDWARE_ORDER_DOWN);
 
         if (up) {
             next_floor_negotiator_add_order(f, HARDWARE_ORDER_UP);
@@ -39,6 +37,8 @@ void next_floor_negotiator_poll_order_sensors() {
         
         if (down) {
             next_floor_negotiator_add_order(f, HARDWARE_ORDER_DOWN);
+        }
+
         }
     }
 }
@@ -53,21 +53,15 @@ int next_floor_negotiator_order_above(int current_floor, HardwareMovement drivin
         case HARDWARE_MOVEMENT_DOWN:
             tmp_queue = down_queue;
             break;
-        default: 
-            break;
     }
 
     for (int f = current_floor; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
         if (tmp_queue[f]) {
+            free(tmp_queue);
             return 1;
         }
     }
-
-    for (int f = 0; f < current_floor; f++) {
-        if (tmp_queue[f]) {
-            return -1;
-        }
-    }
+    free(tmp_queue);
     return 0;
 }
 
@@ -100,8 +94,6 @@ int next_floor_negotiator_get_next_floor(HardwareMovement driving_direction) {
         case HARDWARE_MOVEMENT_UP:
             tmp_queue = up_queue;
             break;
-        default: 
-            break;
     }
     for (int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
         if (tmp_queue[f]) {
@@ -124,8 +116,6 @@ void next_floor_negotiator_remove_order(int floor, HardwareMovement driving_dire
             hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 0);
             tmp_queue = down_queue;
             break;
-        default: 
-            break;
     }
-    tmp_queue[floor] = 0;
+    tmp_queue[f] = 0;
 }
