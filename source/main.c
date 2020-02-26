@@ -80,11 +80,11 @@ int main(){
         switch (current_state) {
             case IDLE:
                 int order_above = next_floor_negotiator_order_above(current_floor, driving_direction);
-              
-                if (next_floor_negotiator_at_next_floor(next_floor)) {
+                if (order_above == 0) {
+                    break;
+                } else if (next_floor_negotiator_at_next_floor(next_floor)) {
                     hardware_command_door_open(1);
                     next_floor_negotiator_remove_order(next_floor, driving_direction);
-                    next_floor = next_floor_negotiator_get_next_floor(driving_direction);
                     timer = start_timer();
                     current_state = DOOR_OPEN;
                     break;
@@ -99,7 +99,6 @@ int main(){
                     current_state = DRIVE_DOWN;
                     break;
                 }  
-
                 break;
 
             case DOOR_OPEN:
