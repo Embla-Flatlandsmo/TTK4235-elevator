@@ -124,33 +124,33 @@ int next_floor_negotiator_get_next_floor(int current_floor, HardwareMovement dri
     switch (driving_direction) {
         case HARDWARE_MOVEMENT_DOWN:
             order_above_or_below = next_floor_negotiator_order_above(current_floor, driving_direction);
-            if (order_above_or_below == -1) {
-                if (!next_floor_negotiator_is_empty(driving_direction))  {
-                    tmp_queue = &down_queue[0];
-                    for (int i = current_floor; i > 0; --i) {
+            if (order_above_or_below == 1) {
+                if (!next_floor_negotiator_is_empty(HARDWARE_MOVEMENT_UP)) {
+                    tmp_queue = &up_queue[0];
+                    for (int i = current_floor; i <= HARDWARE_NUMBER_OF_FLOORS; i++) {
                         if (tmp_queue[i] == 1) {
                             return i;
                         }
                     }
                 } else {
-                    tmp_queue = &up_queue[0];
-                    for (int i = 0; i < current_floor; i++) {
+                    tmp_queue = &down_queue[0];
+                    for (int i = HARDWARE_NUMBER_OF_FLOORS+1; i >= current_floor; --i) {
                         if (tmp_queue[i] == 1) {
                             return i;
                         }
                     }
                 }
-            } else if (order_above_or_below == 1) {
-                if (!next_floor_negotiator_is_empty(HARDWARE_MOVEMENT_UP)) {
-                    tmp_queue = &up_queue[0];
-                    for (int i = current_floor; i < HARDWARE_NUMBER_OF_FLOORS; i++) {
+            } else if (order_above_or_below == -1) {
+                if (!next_floor_negotiator_is_empty(driving_direction))  {
+                    tmp_queue = &down_queue[0];
+                    for (int i = current_floor+1; i >= 0; --i) {
                         if (tmp_queue[i] == 1) {
                             return i;
                         }
                     }
                 } else {
-                    tmp_queue = &down_queue[0];
-                    for (int i = HARDWARE_NUMBER_OF_FLOORS; i > current_floor; --i) {
+                    tmp_queue = &up_queue[0];
+                    for (int i = 0; i <= current_floor; i++) {
                         if (tmp_queue[i] == 1) {
                             return i;
                         }
@@ -164,14 +164,14 @@ int next_floor_negotiator_get_next_floor(int current_floor, HardwareMovement dri
             if (order_above_or_below == 1) {
                 if (next_floor_negotiator_is_empty(driving_direction))  {
                     tmp_queue = &down_queue[0];
-                    for (int i = HARDWARE_NUMBER_OF_FLOORS; i > current_floor; --i) {
+                    for (int i = HARDWARE_NUMBER_OF_FLOORS+1; i >= current_floor; --i) {
                     if (tmp_queue[i] == 1) {
                         return i;
                     }
                     }
                 } else {
                     tmp_queue = &up_queue[0];
-                    for (int i = current_floor; i < HARDWARE_NUMBER_OF_FLOORS; i++) {
+                    for (int i = current_floor; i <= HARDWARE_NUMBER_OF_FLOORS; i++) {
                         if (tmp_queue[i] == 1) {
                             return i;
                         }
@@ -180,14 +180,14 @@ int next_floor_negotiator_get_next_floor(int current_floor, HardwareMovement dri
             } else if (order_above_or_below == -1) {
                 if (!next_floor_negotiator_is_empty(HARDWARE_MOVEMENT_DOWN)) {
                     tmp_queue = &down_queue[0];
-                    for (int i = current_floor; i > 0; --i) {
+                    for (int i = current_floor+1; i >= 0; --i) {
                         if (tmp_queue[i] == 1) {
                             return i;
                         }
                     }
                 } else {
                     tmp_queue = &up_queue[0];
-                    for (int i = 0 ; i < current_floor; i++) {
+                    for (int i = 0 ; i <= current_floor; i++) {
                         if (tmp_queue[i] == 1) {
                             return i;
                         }

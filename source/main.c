@@ -47,6 +47,23 @@ static void sigint_handler(int sig){
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
     exit(0);
 }
+//use if temp_next_floor != next_floor after a stop between floors
+int current_floor_cheat(int current_floor, int next_floor, HardwareMovement driving_direction){ 
+        case HARDWARE_MOVEMENT_DOWN:
+            if(next_floor == current_floor){
+                current_floor -= 1; //move current floor down so it foesnt think its actually at next_floor yet bc its between
+            } 
+            break;
+        case HARDWARE_MOVEMENT_UP:
+            if(next_floor == current_floor){
+                current_floor += 1; //move current_floor up
+            }
+            break;
+        default:
+            break;
+    }
+    return current_floor;
+}
 
 int main(){
     int error = hardware_init();
@@ -61,7 +78,7 @@ int main(){
     time_t timer;
     HardwareMovement driving_direction = HARDWARE_MOVEMENT_DOWN;
     int next_floor;
-    //int temp_next_floor;
+    int temp_next_floor;
     //int door_checker = 0;
     int order_above;
     int current_floor = -1;
@@ -83,7 +100,6 @@ int main(){
         next_floor_negotiator_poll_order_sensors();
         next_floor = next_floor_negotiator_get_next_floor(current_floor, driving_direction);
         current_floor = poll_floor_indicator(current_floor, &between_floors); 
-        
 
         if (hardware_read_stop_signal()) {
             /*
@@ -91,12 +107,16 @@ int main(){
                 door_checker = 1; //means the door is open when stop is activated
             } 
             */
-            //temp_next_floor = next_floor; //save next floor before it is deleted to know which floors you stand between
+            temp_next_floor = next_floor; //save next floor before it is deleted to know which floors you stand between
+            
             current_state = STOP;
         }
 
         switch (current_state) {
             case IDLE:
+                if(between_floors && (temp_next_floor != next_floor)){
+                    current_floor = current_floor_cheat(current_floor, next_floor, driving_direction);
+                }
                 order_above = next_floor_negotiator_order_above(current_floor, driving_direction);
                 if (order_above == 0) {
                     break;
@@ -158,7 +178,7 @@ int main(){
                 break;
             
             case DRIVE_UP:
-                if (next_floor == current_floor && !(between_floors)) {
+                if ((next_floor == current_floor) && (!(between_floors))) {
                     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
                     current_state = IDLE;
                     break;
@@ -166,7 +186,7 @@ int main(){
                 break;
 
             case DRIVE_DOWN:
-                if (next_floor == current_floor && !(between_floors)) {
+                if ((next_floor == current_floor) && (!(between_floors))) {
                     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
                     current_state = IDLE;
                     break;
