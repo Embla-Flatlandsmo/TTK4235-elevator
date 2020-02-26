@@ -38,14 +38,14 @@ void next_floor_negotiator_clear_queues();
  * @param next_floor goal floor.
  * @return 1 if elevator is at the goal floor, 0 otherwise.
  */
-int next_floor_negotiator_at_next_floor(int next_floor);
+int next_floor_negotiator_at_next_floor(int next_floor, int current_floor);
 
 /**
  * @brief Figures out which floor to go to next.
  * @param driving_direction Elevator's current driving direction.
  * @return -1 if there are no orders, floor number otherwise.
  */
-int next_floor_negotiator_get_next_floor(HardwareMovement driving_direction);
+int next_floor_negotiator_get_next_floor(int current_floor, HardwareMovement driving_direction);
 
 /**
  * @brief Removes an order from the up_queue or down_queue
