@@ -10,7 +10,7 @@
 /** 
  * @brief Polls all the floor sensors and puts them in up_queue or down_queue
  */
-void next_floor_negotiator_poll_sensors();
+void next_floor_negotiator_poll_order_sensors();
 
 /**
  * @brief Adds order to up_queue or down_queue. Used in poll_sensors.
@@ -58,8 +58,8 @@ void next_floor_negotiator_remove_order(int floor, HardwareMovement driving_dire
  * @brief Checks is a queue is empty.
  * 
  * @param q An array of 4 elements (a queue).
- * @return int non-zero value if queue empty, 0 if not
+ * @return 1 if queue empty, 0 if not
  */
-int isEmpty(int q[]);
+int isEmpty(HardwareMovement up_or_down);
 
 #endif

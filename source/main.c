@@ -68,7 +68,7 @@ int main(){
 
     while (1) {
         hardware_command_stop_light(0);
-        next_floor_negotiator_poll_sensors();
+        next_floor_negotiator_poll_order_sensors();
         current_floor = poll_floor_indicator(current_floor); 
         next_floor = next_floor_negotiator_get_next_floor(driving_direction);
 
@@ -79,18 +79,8 @@ int main(){
 
         switch (current_state) {
             case IDLE:
-
-                if (next_floor_negotiator_order_above(current_floor, driving_direction) == 1) {
-                    hardware_command_movement(HARDWARE_MOVEMENT_UP);
-                    driving_direction = HARDWARE_MOVEMENT_UP;
-                    current_state = DRIVE_UP;
-                    break;
-                } else if(next_floor_negotiator_order_above(current_floor, driving_direction) == -1){
-                    hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-                    driving_direction = HARDWARE_MOVEMENT_DOWN;
-                    current_state = DRIVE_DOWN;
-                    break;
-                }                
+                int order_above = next_floor_negotiator_order_above(current_floor, driving_direction);
+              
                 if (next_floor_negotiator_at_next_floor(next_floor)) {
                     hardware_command_door_open(1);
                     next_floor_negotiator_remove_order(next_floor, driving_direction);
@@ -98,7 +88,18 @@ int main(){
                     timer = start_timer();
                     current_state = DOOR_OPEN;
                     break;
-                }
+                } else if (order_above == 1) {
+                    hardware_command_movement(HARDWARE_MOVEMENT_UP);
+                    driving_direction = HARDWARE_MOVEMENT_UP;
+                    current_state = DRIVE_UP;
+                    break;
+                } else if (order_above == -1){
+                    hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
+                    driving_direction = HARDWARE_MOVEMENT_DOWN;
+                    current_state = DRIVE_DOWN;
+                    break;
+                }  
+
                 break;
 
             case DOOR_OPEN:
@@ -106,9 +107,12 @@ int main(){
                     timer = start_timer();
                     break;
                 }
-                while(!timer_expired(timer)){} //stay here as long as timer is active
-                hardware_command_door_open(0);
-                current_state = IDLE;
+
+                if (timer_expired(timer)) { //check if the timer has expired
+                    hardware_command_door_open(0);
+                    current_state = IDLE;
+                }
+
                 break;
             
             case DRIVE_UP:

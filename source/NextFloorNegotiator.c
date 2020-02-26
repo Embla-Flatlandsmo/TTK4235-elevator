@@ -4,16 +4,25 @@ static int up_queue[HARDWARE_NUMBER_OF_FLOORS];
 static int down_queue[HARDWARE_NUMBER_OF_FLOORS];
 
 
-int isEmpty(int q[]){ 
-    int result = 0;
-    for(int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; i++){
-        if(q[i] != 0){
-            result += 0;
-        } else if (q[i] == 0){
-            result += 1;
+int next_floor_negotiator_is_empty(HardwareMovement up_or_down){ 
+    int* tmp_queue
+    switch (up_or_down) {
+        case HARDWARE_MOVEMENT_UP:
+            tmp_queue = up_queue;
+            break;
+        case HARDWARE_MOVEMENT_DOWN:
+            tmp_queue = down_queue;
+            break;
+        default:
+            break;
+    }
+
+    for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
+        if(tmp_queue[f] != 0){
+            return 0;
         }
     }
-    return result;
+    return 1;
 }
 
 void next_floor_negotiator_add_order(int floor, HardwareOrder order_type) {
@@ -34,7 +43,7 @@ void next_floor_negotiator_add_order(int floor, HardwareOrder order_type) {
     }
 }
 
-void next_floor_negotiator_poll_sensors() {
+void next_floor_negotiator_poll_order_sensors() {
     for (int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
         int up = hardware_read_order(f, HARDWARE_ORDER_UP);
         int inside = hardware_read_order(f, HARDWARE_ORDER_INSIDE);
@@ -61,17 +70,17 @@ int next_floor_negotiator_order_above(int current_floor, HardwareMovement drivin
 
     switch(driving_direction) {
         case HARDWARE_MOVEMENT_UP:
-            if(isEmpty(up_queue)){
-                tmp_queue = down_queue;
+            if(next_floor_negotiator_is_empty(driving_direction)){
+                tmp_queue = &down_queue[0];
             } else{
-                tmp_queue = up_queue;
+                tmp_queue = &up_queue[0];
             }            
             break;
         case HARDWARE_MOVEMENT_DOWN:
-            if(isEmpty(down_queue)){
-                tmp_queue = up_queue;
+            if(next_floor_negotiator_is_empty(driving_direction)){
+                tmp_queue = &up_queue[0];
             }else{
-                tmp_queue = down_queue;
+                tmp_queue = &down_queue[0];
             }
             break;
         default:
@@ -116,14 +125,14 @@ int next_floor_negotiator_get_next_floor(HardwareMovement driving_direction) {
     int* tmp_queue;
     switch (driving_direction) {
         case HARDWARE_MOVEMENT_DOWN:
-            if(isEmpty(down_queue)){
+            if(next_floor_negotiator_is_empty(driving_direction)){
                 tmp_queue = &up_queue[0];
             } else{
                 tmp_queue = &down_queue[0];
             }            
             break;
         case HARDWARE_MOVEMENT_UP:
-            if(isEmpty(up_queue)){
+            if(next_floor_negotiator_is_empty(driving_direction)){
                 tmp_queue = &down_queue[0];
             }else{
                 tmp_queue = &up_queue[0];
