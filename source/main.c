@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <time.h>
 #include "hardware.h"
 #include "NextFloorNegotiator.h"
-#include "ElevatorStateMachine.h"
+
 
 typedef enum {
     DRIVE_DOWN,
@@ -32,13 +33,6 @@ int poll_floor_indicator(int current_floor) {
         }
     }
     return current_floor;
-
-}
-
-int order_above(int current_floor, int next_floor, HardwareMovement) {
-    if (next_floor == -1) {
-        return -1;
-    }
 }
 
 
@@ -56,8 +50,10 @@ int main(){
         exit(1);
     }
 
+    signal(SIGINT, sigint_handler);
+
     State current_state;
-    timer_t timer;
+    time_t timer;
     int next_floor;
 
     // Initial move down
@@ -73,7 +69,7 @@ int main(){
     while (1) {
         hardware_command_stop_light(0);
         next_floor_negotiator_poll_sensors();
-        current_floor = poll_floor_indicator(current_floor);
+        current_floor = poll_floor_indicator(current_floor); 
         next_floor = next_floor_negotiator_get_next_floor(driving_direction);
 
 
@@ -83,40 +79,36 @@ int main(){
 
         switch (current_state) {
             case IDLE:
-                if () ///////////////////////////////////////////
-                if (next_floor_negotiator_order_above(current_floor, driving_direction)) {
+
+                if (next_floor_negotiator_order_above(current_floor, driving_direction) == 1) {
                     hardware_command_movement(HARDWARE_MOVEMENT_UP);
                     driving_direction = HARDWARE_MOVEMENT_UP;
                     current_state = DRIVE_UP;
                     break;
-                } else {
+                } else if(next_floor_negotiator_order_above(current_floor, driving_direction) == -1){
                     hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
                     driving_direction = HARDWARE_MOVEMENT_DOWN;
                     current_state = DRIVE_DOWN;
                     break;
-                }
-
-                }
+                }                
                 if (next_floor_negotiator_at_next_floor(next_floor)) {
                     hardware_command_door_open(1);
                     next_floor_negotiator_remove_order(next_floor, driving_direction);
+                    next_floor = next_floor_negotiator_get_next_floor(driving_direction);
                     timer = start_timer();
                     current_state = DOOR_OPEN;
                     break;
                 }
-
-
+                break;
 
             case DOOR_OPEN:
                 if (hardware_read_obstruction_signal()) {
                     timer = start_timer();
                     break;
                 }
-                if (timer_expired(timer)) {
-                    hardware_command_door_open(0);
-                    current_state = IDLE;
-                    break;
-                }
+                while(!timer_expired(timer)){} //stay here as long as timer is active
+                hardware_command_door_open(0);
+                current_state = IDLE;
                 break;
             
             case DRIVE_UP:
@@ -125,6 +117,7 @@ int main(){
                     current_state = IDLE;
                     break;
                 }
+                break;
 
             case DRIVE_DOWN:
                 if (next_floor_negotiator_at_next_floor(next_floor)) {
@@ -132,18 +125,16 @@ int main(){
                     current_state = IDLE;
                     break;
                 }
+                break;
 
             case STOP:
                 next_floor_negotiator_clear_queues();
                 hardware_command_stop_light(1);
                 hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+                current_state = IDLE; //getting out of STOP
                 break;
         }
     }
-
-
-    
-
 
     return 0;
 }

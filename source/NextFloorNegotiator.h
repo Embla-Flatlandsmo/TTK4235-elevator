@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <signal.h>
 #include "hardware.h"
-#include "LinkedList.h"
-#include "ElevatorStateMachine.h"
 
 
 /** 
@@ -25,7 +23,7 @@ void next_floor_negotiator_add_orders(int floor, HardwareOrder order_type);
  * @brief Checks if the next order is above the current floor.
  * @param current_floor elevator's current floor
  * @param driving_direction elevator's driving direction
- * @return 1 if next order is above, 0 if next order is below.
+ * @return 1 if next order is above, -1 if next order is below, 0 if there is no next order.
  */
 int next_floor_negotiator_order_above(int current_floor, HardwareMovement driving_direction);
 
@@ -54,4 +52,14 @@ int next_floor_negotiator_get_next_floor(HardwareMovement driving_direction);
  * @param floor Floor to be removed
  * @param driving_direction Elevator's driving direction.
  */
-void next_floor_negotiator_remove_order(int floor, HardwareMovement driving_direction)
+void next_floor_negotiator_remove_order(int floor, HardwareMovement driving_direction);
+
+/**
+ * @brief Checks is a queue is empty.
+ * 
+ * @param q An array of 4 elements (a queue).
+ * @return int non-zero value if queue empty, 0 if not
+ */
+int isEmpty(int q[]);
+
+#endif
