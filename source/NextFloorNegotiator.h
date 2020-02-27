@@ -33,12 +33,6 @@ int nfn_order_above(int current_floor, HardwareMovement driving_direction);
  */
 void nfn_clear_queues();
 
-/**
- * @brief Checks if the elevator is at the goal floor.
- * @param next_floor goal floor.
- * @return 1 if elevator is at the goal floor, 0 otherwise.
- */
-int nfn_at_next_floor(int next_floor, int current_floor);
 
 /**
  * @brief finds the first 1 in the array in either descending or ascending order.

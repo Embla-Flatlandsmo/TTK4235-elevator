@@ -13,12 +13,12 @@ typedef enum {
     DRIVE_UP,
     STOP
 } State;
-
+/*
 typedef struct {
     int floor;
-    int above;
+    int between;
 } Position;
-
+*/
 
 time_t start_timer() {
 	return time(NULL); 
@@ -32,15 +32,16 @@ int timer_expired(time_t startTime){
 	return 0;
 }
 
-void poll_floor_indicator(Position* pos) {
+int poll_floor_indicator(int current_floor, int* between_floors) {
     for (int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
         if (hardware_read_floor_sensor(f)) {
             hardware_command_floor_indicator_on(f);
-            pos->above = 0;
-            pos->floor = f;
+            *between_floors = 0;
+            return f;
         }
     }
-    pos->above = 1;
+    *between_floors = 1;
+    return current_floor;
 }
 
 
@@ -52,6 +53,7 @@ static void sigint_handler(int sig){
 }
 //use if temp_next_floor != next_floor after a stop between floors
 int current_floor_cheat(int current_floor, int next_floor, HardwareMovement driving_direction){ 
+    switch(driving_direction) {
         case HARDWARE_MOVEMENT_DOWN:
             if(next_floor == current_floor){
                 current_floor -= 1; //move current floor down so it foesnt think its actually at next_floor yet bc its between
@@ -80,19 +82,21 @@ int main(){
     State current_state;
     time_t timer;
     HardwareMovement driving_direction = HARDWARE_MOVEMENT_DOWN;
+    //Position elevator_position = { -1, 1 };
+    int current_floor = -1;
+    int between_floors;
     int next_floor;
     int temp_next_floor;
-    Position current_position = {0, 1};
-    int order_above;
     int door_open = 0;
+    int order_above;
 
     // Initial move down
     nfn_clear_queues();
 
     hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
 
-    while (current_position.above == 1) {
-        poll_floor_indicator(&current_position);
+    while (current_floor == -1) {
+        current_floor = poll_floor_indicator(current_floor, &between_floors);
     }
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
     current_state = IDLE;
@@ -100,30 +104,32 @@ int main(){
     while (1) {
         hardware_command_stop_light(0);
         nfn_poll_order_sensors();
-        next_floor = nfn_get_next_floor(current_position.floor, driving_direction);
-        poll_floor_indicator(&current_position); 
+        next_floor = nfn_get_next_floor(current_floor, driving_direction);
+        temp_next_floor = next_floor;
+        current_floor = poll_floor_indicator(current_floor, &between_floors);
+
+        if (door_open) {
+            current_state = DOOR_OPEN;
+        }
 
         if (hardware_read_stop_signal()) {
             temp_next_floor = next_floor; //save next floor before it is deleted to know which floors you stand between
             current_state = STOP;
         }
 
+
+
         switch (current_state) {
             case IDLE:
-            
-                if (door_open) {
-                    current_state = DOOR_OPEN;
-                    break;
+
+                if(between_floors && (temp_next_floor != next_floor)){
+                    current_floor = current_floor_cheat(current_floor, next_floor, driving_direction);
                 }
 
-                if(current_position.above && (temp_next_floor != next_floor)){
-                    current_floor = current_floor_cheat(current_position.floor, next_floor, driving_direction);
-                }
-
-                order_above = nfn_order_above(current_position.floor, driving_direction);
+                order_above = nfn_order_above(current_floor, driving_direction);
                 if (order_above == 0) {
                     break;
-                } else if (next_floor == current_position.floor ){
+                } else if (next_floor == current_floor && !(between_floors)){
                     hardware_command_door_open(1);
                     nfn_remove_order(next_floor, driving_direction);
                     timer = start_timer();
@@ -158,7 +164,7 @@ int main(){
                 break;
             
             case DRIVE_UP:
-                if ((next_floor == current_position.floor) && (!(current_position.above))) {
+                if ((next_floor == current_floor) && (!(between_floors))) {
                     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
                     current_state = IDLE;
                     break;
@@ -166,7 +172,7 @@ int main(){
                 break;
 
             case DRIVE_DOWN:
-                if ((next_floor == current_position.floor) && (!(current_position.above))) {
+                if ((next_floor == current_floor) && (!(between_floors))) {
                     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
                     current_state = IDLE;
                     break;
@@ -176,6 +182,7 @@ int main(){
             case STOP:
                 nfn_clear_queues();
                 hardware_command_stop_light(1);
+                timer = start_timer();
                 hardware_command_movement(HARDWARE_MOVEMENT_STOP);
                 current_state = IDLE; 
                 break;

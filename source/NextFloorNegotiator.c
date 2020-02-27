@@ -1,16 +1,21 @@
 #include "NextFloorNegotiator.h"
 
+#define UP 1
+#define DOWN -1
+#define DESCENDING 0
+#define ASCENDING 1
+
 static int up_queue[HARDWARE_NUMBER_OF_FLOORS];
 static int down_queue[HARDWARE_NUMBER_OF_FLOORS];
 
 
-int nfn_is_empty(HardwareMovement up_or_down){ 
+int nfn_is_empty(int up_or_down){ 
     int* tmp_queue;
     switch (up_or_down) {
-        case HARDWARE_MOVEMENT_UP:
+        case UP:
             tmp_queue = &up_queue[0];
             break;
-        case HARDWARE_MOVEMENT_DOWN:
+        case DOWN:
             tmp_queue = &down_queue[0];
             break;
         default:
@@ -70,14 +75,14 @@ int nfn_order_above(int current_floor, HardwareMovement driving_direction) {
 
     switch(driving_direction) {
         case HARDWARE_MOVEMENT_UP:
-            if(nfn_is_empty(driving_direction)){
+            if(nfn_is_empty(UP)){
                 tmp_queue = &down_queue[0];
             } else{
                 tmp_queue = &up_queue[0];
             }            
             break;
         case HARDWARE_MOVEMENT_DOWN:
-            if(nfn_is_empty(driving_direction)){
+            if(nfn_is_empty(DOWN)){
                 tmp_queue = &up_queue[0];
             }else{
                 tmp_queue = &down_queue[0];
@@ -109,12 +114,6 @@ void nfn_clear_queues() {
     }
 }
 
-int nfn_at_next_floor(int next_floor, int current_floor) {
-    if (next_floor == current_floor) {
-        return 1;
-    }
-    return 0;
-}
 
 int nfn_read_array_ascending_or_descending(int* queue, int ascend_or_descend, int lower_index, int higher_index) {
     if (ascend_or_descend) {
@@ -130,32 +129,76 @@ int nfn_read_array_ascending_or_descending(int* queue, int ascend_or_descend, in
             }
         }
     }
+    return -1;
 }
 
 
-int nfn_find_first_one(int* queue, int above_or_below, int ascend_or_descend, int current_floor) {
-    if (above_or_below) {
-        return read_array_ascending_or_descending(queue, ascend_or_descend, current_floor, HARDWARE_NUMBER_OF_FLOORS);
+int nfn_find_first_one(int* queue, int check_above, int ascend_or_descend, int current_floor) {
+    if (check_above) {
+        return nfn_read_array_ascending_or_descending(queue, ascend_or_descend, current_floor, HARDWARE_NUMBER_OF_FLOORS);
     }
-    if (!above_or_below) {
-        return read_array_ascending_or_descending(queue, ascend_or_descend, 0, current_floor)
+    if (!check_above) {
+        return nfn_read_array_ascending_or_descending(queue, ascend_or_descend, 0, current_floor);
+    }
+    return -1;
 }
 
 int nfn_get_next_floor(int current_floor, HardwareMovement driving_direction) {
     int order_above_or_below = nfn_order_above(current_floor, driving_direction);
-    if (order_above_or_below == 1) {
-        if (!nfn_is_empty(HARDWARE_MOVEMENT_UP)) {
-            return nfn_find_first_one(up_queue, 1, 1, current_floor);
-        } else {
-            return nfn_find_first_one(down_queue, 1, 0, current_floor);
-        }
-    } else if (order_above_or_below == -1) {
-        if (!nfn_is_empty(HARDWARE_MOVEMENT_DOWN))  {
-            return nfn_find_first_one(down_queue, 0, 0, current_floor);
-        } else {
-            return nfn_find_first_one(up_queue, 0, 1, current_floor);
-    } else { return -1; }        
+    int want_this;
+    switch(driving_direction){
+        case HARDWARE_MOVEMENT_UP:
+            if (order_above_or_below == 1) {
+                if (!nfn_is_empty(UP)) {
+                    want_this = nfn_find_first_one(up_queue, 1, 1, current_floor);
+                    if (want_this == -1) {
+                        want_this = nfn_find_first_one(up_queue, 0, 1, current_floor);
+                    }
+                    return want_this;
+                } else {
+                    return nfn_find_first_one(down_queue, 1, 0, current_floor);
+                }
+            } else if (order_above_or_below == -1) {
+                if (!nfn_is_empty(DOWN))  {
+                    want_this = nfn_find_first_one(down_queue, 0, 0, current_floor);
+                    if (want_this == -1) {
+                        want_this = nfn_find_first_one(down_queue, 1, 0, current_floor);
+                    }
+                    return want_this;
+                } else {
+                    return nfn_find_first_one(up_queue, 0, 1, current_floor);
+                }
+            } else { return -1; }
+            break;
+        case HARDWARE_MOVEMENT_DOWN:
+            if (order_above_or_below == -1) {
+                if (!nfn_is_empty(DOWN)) {
+                    want_this = nfn_find_first_one(down_queue, 0, 0, current_floor);//checking lowest part of q
+                    if (want_this == -1) {
+                        want_this = nfn_find_first_one(down_queue, 1, 0, current_floor);//checking highest part of q
+                    } 
+                    return want_this;
+                } else {
+                    return nfn_find_first_one(up_queue, 0, 1, current_floor);
+                }
+            } else if (order_above_or_below == 1) {
+                if (!nfn_is_empty(UP))  {
+                    want_this = nfn_find_first_one(up_queue, 1, 1, current_floor);
+                    if (want_this == -1) {
+                        want_this = nfn_find_first_one(up_queue, 0, 1, current_floor);
+                    }
+                    return want_this;
+                } else {
+                    return nfn_find_first_one(down_queue, 1, 0, current_floor);
+                }
+            } else { return -1; }
+            break;
+        default:
+            return -1;
+    }
+         
 }
+
 
 void nfn_remove_order(int floor, HardwareMovement driving_direction) {
     up_queue[floor] = 0;
