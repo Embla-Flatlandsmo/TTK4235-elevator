@@ -14,6 +14,10 @@ typedef enum {
     STOP
 } State;
 
+typedef struct {
+    int floor;
+    int above;
+} Position;
 
 
 time_t start_timer() {
@@ -28,16 +32,15 @@ int timer_expired(time_t startTime){
 	return 0;
 }
 
-int poll_floor_indicator(int current_floor, int* between_floors) {
+void poll_floor_indicator(Position* pos) {
     for (int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
         if (hardware_read_floor_sensor(f)) {
             hardware_command_floor_indicator_on(f);
-            *between_floors = 0;
-            return f;
+            pos->above = 0;
+            pos->floor = f;
         }
     }
-    *between_floors = 1;
-    return current_floor;
+    pos->above = 1;
 }
 
 
@@ -79,76 +82,53 @@ int main(){
     HardwareMovement driving_direction = HARDWARE_MOVEMENT_DOWN;
     int next_floor;
     int temp_next_floor;
-    //int door_checker = 0;
+    Position current_position = {0, 1};
     int order_above;
-    int current_floor = -1;
-    int between_floors;
+    int door_open = 0;
 
     // Initial move down
-    next_floor_negotiator_clear_queues();
+    nfn_clear_queues();
 
     hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
 
-    while (current_floor == -1) {
-        current_floor = poll_floor_indicator(current_floor, &between_floors);
+    while (current_position.above == 1) {
+        poll_floor_indicator(&current_position);
     }
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
     current_state = IDLE;
 
     while (1) {
         hardware_command_stop_light(0);
-        next_floor_negotiator_poll_order_sensors();
-        next_floor = next_floor_negotiator_get_next_floor(current_floor, driving_direction);
-        current_floor = poll_floor_indicator(current_floor, &between_floors); 
+        nfn_poll_order_sensors();
+        next_floor = nfn_get_next_floor(current_position.floor, driving_direction);
+        poll_floor_indicator(&current_position); 
 
         if (hardware_read_stop_signal()) {
-            /*
-            if(current_state == DOOR_OPEN){
-                door_checker = 1; //means the door is open when stop is activated
-            } 
-            */
             temp_next_floor = next_floor; //save next floor before it is deleted to know which floors you stand between
-            
             current_state = STOP;
         }
 
         switch (current_state) {
             case IDLE:
-                if(between_floors && (temp_next_floor != next_floor)){
-                    current_floor = current_floor_cheat(current_floor, next_floor, driving_direction);
+            
+                if (door_open) {
+                    current_state = DOOR_OPEN;
+                    break;
                 }
-                order_above = next_floor_negotiator_order_above(current_floor, driving_direction);
+
+                if(current_position.above && (temp_next_floor != next_floor)){
+                    current_floor = current_floor_cheat(current_position.floor, next_floor, driving_direction);
+                }
+
+                order_above = nfn_order_above(current_position.floor, driving_direction);
                 if (order_above == 0) {
                     break;
-                } else if (next_floor == current_floor ){ //|| door_checker == 1){ 
-                    /*
-                    if(between_floors == 1){
-                        if(temp_next_floor < next_floor && driving_direction == HARDWARE_MOVEMENT_UP){
-                            order_above = 1;
-                            break;
-                        } else if(temp_next_floor > next_floor && current_floor > next_floor && driving_direction == HARDWARE_MOVEMENT_UP){
-                            order_above = -1;
-                            break;
-                        } else if((temp_next_floor < next_floor) && (current_floor < next_floor) && (driving_direction == HARDWARE_MOVEMENT_DOWN)){
-                            order_above = 1;
-                            break;
-                        } else if(temp_next_floor > next_floor && driving_direction == HARDWARE_MOVEMENT_DOWN){
-                            order_above = -1;
-                            break;
-                        }
-                        
-                    }*/ //^this doesnt work lol, trying to tell elevator where it is after a stop between floors
-                    
-                    /*
-                    if(door_checker  == 1){
-                        door_checker = 0;
-                    }
-                    */
+                } else if (next_floor == current_position.floor ){
                     hardware_command_door_open(1);
-                    next_floor_negotiator_remove_order(next_floor, driving_direction);
-                    timer = start_timer();                    
+                    nfn_remove_order(next_floor, driving_direction);
+                    timer = start_timer();
+                    door_open = 1;                    
                     current_state = DOOR_OPEN;
-                    
                     break;
                 } else if (order_above == 1) {
                     hardware_command_movement(HARDWARE_MOVEMENT_UP);
@@ -171,14 +151,14 @@ int main(){
 
                 if (timer_expired(timer)) { //check if the timer has expired
                     hardware_command_door_open(0);
-                    //temp_next_floor = -1,
+                    door_open = 0;
                     current_state = IDLE;
+                    break;
                 }
-
                 break;
             
             case DRIVE_UP:
-                if ((next_floor == current_floor) && (!(between_floors))) {
+                if ((next_floor == current_position.floor) && (!(current_position.above))) {
                     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
                     current_state = IDLE;
                     break;
@@ -186,7 +166,7 @@ int main(){
                 break;
 
             case DRIVE_DOWN:
-                if ((next_floor == current_floor) && (!(between_floors))) {
+                if ((next_floor == current_position.floor) && (!(current_position.above))) {
                     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
                     current_state = IDLE;
                     break;
@@ -194,10 +174,9 @@ int main(){
                 break;
 
             case STOP:
-                next_floor_negotiator_clear_queues();
+                nfn_clear_queues();
                 hardware_command_stop_light(1);
                 hardware_command_movement(HARDWARE_MOVEMENT_STOP);
-                //Next floor blir slettet, heisen tror at den står i IDLE med dørene lukket
                 current_state = IDLE; 
                 break;
         }
