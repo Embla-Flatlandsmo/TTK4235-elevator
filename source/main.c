@@ -52,7 +52,6 @@ static void sigint_handler(int sig){
 }
 //use if temp_next_floor != next_floor after a stop between floors
 int current_floor_cheat(int current_floor, int next_floor, HardwareMovement driving_direction){ 
-    switch(driving_direction){
         case HARDWARE_MOVEMENT_DOWN:
             if(next_floor == current_floor){
                 current_floor -= 1; //move current floor down so it foesnt think its actually at next_floor yet bc its between
@@ -118,7 +117,7 @@ int main(){
                 }
 
                 if(current_position.above && (temp_next_floor != next_floor)){
-                    current_position.floor = current_floor_cheat(current_position.floor, next_floor, driving_direction);
+                    current_floor = current_floor_cheat(current_position.floor, next_floor, driving_direction);
                 }
 
                 order_above = nfn_order_above(current_position.floor, driving_direction);
