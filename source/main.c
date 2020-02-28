@@ -5,6 +5,10 @@
 #include "hardware.h"
 #include "NextFloorNegotiator.h"
 
+#define OPEN 1
+#define CLOSED 0
+#define UNDEFINED -1
+
 
 typedef enum {
     DRIVE_DOWN,
@@ -83,11 +87,11 @@ int main(){
     time_t timer;
     HardwareMovement driving_direction = HARDWARE_MOVEMENT_DOWN;
     //Position elevator_position = { -1, 1 };
-    int current_floor = -1;
+    int current_floor = UNDEFINED;
     int between_floors;
-    int next_floor;
+    int next_floor = UNDEFINED;
     int temp_next_floor;
-    int door_open = 0;
+    int door_open = CLOSED;
     int order_above;
 
     // Initial move down
@@ -95,7 +99,7 @@ int main(){
 
     hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
 
-    while (current_floor == -1) {
+    while (current_floor == UNDEFINED) {
         current_floor = poll_floor_indicator(current_floor, &between_floors);
     }
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
@@ -133,7 +137,7 @@ int main(){
                     hardware_command_door_open(1);
                     nfn_remove_order(next_floor, driving_direction);
                     timer = start_timer();
-                    door_open = 1;                    
+                    door_open = OPEN;                    
                     current_state = DOOR_OPEN;
                     break;
                 } else if (order_above == 1) {
@@ -157,7 +161,7 @@ int main(){
 
                 if (timer_expired(timer)) { //check if the timer has expired
                     hardware_command_door_open(0);
-                    door_open = 0;
+                    door_open = CLOSED;
                     current_state = IDLE;
                     break;
                 }

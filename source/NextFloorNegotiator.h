@@ -53,7 +53,7 @@ int nfn_read_array_ascending_or_descending(int* queue, int ascend_or_descend, in
  * @param current_floor descides where to start and stop reading.
  * @return the index of the first 1 in the array, based on the conditions given.
  */
-int nfn_find_first_one(int* queue, int above_or_below, int ascend_or_descend, int current_floor);
+int nfn_find_next_order(int* queue, int above_or_below, int ascend_or_descend, int current_floor);
 
 /**
  * @brief Figures out which floor to go to next.
