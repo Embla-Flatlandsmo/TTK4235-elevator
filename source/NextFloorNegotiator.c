@@ -132,7 +132,7 @@ int nfn_read_array_ascending_or_descending(int* queue, int ascend_or_descend, in
             }
         }
     }
-    return -1;
+    return NO_ORDER_FOUND;
 }
 
 
@@ -143,15 +143,15 @@ int nfn_find_next_order(int* queue, int check_above, int ascend_or_descend, int 
     if (!check_above) {
         return nfn_read_array_ascending_or_descending(queue, ascend_or_descend, 0, current_floor);
     }
-    return -1;
+    return NO_ORDER_FOUND;
 }
 
 int nfn_get_next_floor(int current_floor, HardwareMovement driving_direction) {
     if (nfn_is_empty(UP) && nfn_is_empty(DOWN)) {
-        return -1;
+        return NO_ORDER_FOUND;
     }
 
-    int tmp_next_floor = -1;
+    int tmp_next_floor = NO_ORDER_FOUND;
 
     while (tmp_next_floor == NO_ORDER_FOUND) {
         switch(driving_direction) {
@@ -162,7 +162,6 @@ int nfn_get_next_floor(int current_floor, HardwareMovement driving_direction) {
                 }
                 if (tmp_next_floor == NO_ORDER_FOUND) {
                     driving_direction = HARDWARE_MOVEMENT_DOWN;
-                    break;
                 } else {
                     return tmp_next_floor;
                 }
@@ -177,8 +176,9 @@ int nfn_get_next_floor(int current_floor, HardwareMovement driving_direction) {
                 } else {
                     return tmp_next_floor;
                 }
+                break;
             default:
-                return -1;
+                return NO_ORDER_FOUND;
         }
     }
 }
@@ -240,6 +240,7 @@ int nfn_get_next_floor(int current_floor, HardwareMovement driving_direction) {
          
 }
 */
+
 
 void nfn_remove_order(int floor, HardwareMovement driving_direction) {
     up_queue[floor] = 0;
