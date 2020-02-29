@@ -45,11 +45,41 @@ time\+\_\+t \hyperlink{main_8c_a8f53cb31f6d9093feaa897c095057e3d}{start\+\_\+tim
 \begin{DoxyCompactList}\small\item\em Function for starting the timer. \end{DoxyCompactList}\item 
 int \hyperlink{main_8c_ae6abbf09322587b54b161dbad87c5459}{timer\+\_\+expired} (time\+\_\+t start\+Time)
 \begin{DoxyCompactList}\small\item\em Function for checking if the timer has expired. \end{DoxyCompactList}\item 
-void \hyperlink{main_8c_a887ea3f667e94b6bdedbd6c969eaf215}{poll\+\_\+floor\+\_\+indicator} (int $\ast$current\+\_\+floor, int $\ast$between\+\_\+floors, \hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement} driving\+\_\+direction, int $\ast$stopped\+\_\+between)
+void \hyperlink{main_8c_a887ea3f667e94b6bdedbd6c969eaf215}{poll\+\_\+floor\+\_\+indicator} (int $\ast$\hyperlink{main_8c_a53f0cf8d6c7426344a7336af4b06925a}{current\+\_\+floor}, int $\ast$\hyperlink{main_8c_a0d38da447588f7234ad833be0b003306}{between\+\_\+floors}, \hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement} driving\+\_\+direction, int $\ast$\hyperlink{main_8c_a913a15652cd2379397df0a3f1ec546d7}{stopped\+\_\+between})
 \begin{DoxyCompactList}\small\item\em Polls all the floor indicators and updates the. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8c_aed429b7c618757d735b6bea2609c229a}\label{main_8c_aed429b7c618757d735b6bea2609c229a}} 
+static void \hyperlink{main_8c_aed429b7c618757d735b6bea2609c229a}{sigint\+\_\+handler} (int sig)
+\begin{DoxyCompactList}\small\item\em Function for handling interrupts, results in program termination. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
 int \hyperlink{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
 \begin{DoxyCompactList}\small\item\em This is where shit gets real. Contains the state machine \+:) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8c_a54138d08678dd972a2c9b13e069fd91a}\label{main_8c_a54138d08678dd972a2c9b13e069fd91a}} 
+\hyperlink{main_8c_a5d74787dedbc4e11c1ab15bf487e61f8}{State} {\bfseries current\+\_\+state}
+\item 
+\mbox{\Hypertarget{main_8c_ae2281da6157495d69406c35f69a61f9f}\label{main_8c_ae2281da6157495d69406c35f69a61f9f}} 
+time\+\_\+t {\bfseries timer}
+\item 
+\mbox{\Hypertarget{main_8c_a8438246f5ca0098b0037c5b312fff8c1}\label{main_8c_a8438246f5ca0098b0037c5b312fff8c1}} 
+\hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement} {\bfseries driving\+\_\+direction}
+\item 
+\mbox{\Hypertarget{main_8c_a53f0cf8d6c7426344a7336af4b06925a}\label{main_8c_a53f0cf8d6c7426344a7336af4b06925a}} 
+static int \hyperlink{main_8c_a53f0cf8d6c7426344a7336af4b06925a}{current\+\_\+floor}
+\begin{DoxyCompactList}\small\item\em Variable for storing the last registered floor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8c_a0d38da447588f7234ad833be0b003306}\label{main_8c_a0d38da447588f7234ad833be0b003306}} 
+static int \hyperlink{main_8c_a0d38da447588f7234ad833be0b003306}{between\+\_\+floors}
+\begin{DoxyCompactList}\small\item\em Variable for storing whether we are above, below or at a floor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8c_ae51a4ae22a117093b5d112b7e1e81a1a}\label{main_8c_ae51a4ae22a117093b5d112b7e1e81a1a}} 
+static int \hyperlink{main_8c_ae51a4ae22a117093b5d112b7e1e81a1a}{door\+\_\+open}
+\begin{DoxyCompactList}\small\item\em Variable for remembering whether or not the door has been opened. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8c_a0d8675459cb6e82c10194cc12b8ce846}\label{main_8c_a0d8675459cb6e82c10194cc12b8ce846}} 
+static int \hyperlink{main_8c_a0d8675459cb6e82c10194cc12b8ce846}{order\+\_\+above}
+\begin{DoxyCompactList}\small\item\em Variable for storing if we have an order above, below or no order. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8c_a913a15652cd2379397df0a3f1ec546d7}\label{main_8c_a913a15652cd2379397df0a3f1ec546d7}} 
+static int \hyperlink{main_8c_a913a15652cd2379397df0a3f1ec546d7}{stopped\+\_\+between}
+\begin{DoxyCompactList}\small\item\em Variable for remembering whether the elevator has been stopped between floors. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}

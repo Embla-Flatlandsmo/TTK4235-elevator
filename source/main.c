@@ -55,7 +55,7 @@ int timer_expired(time_t startTime){
  * @param[in]   driving_direction Elevator's driving direction
  * @param[in, out]  stopped_between Variable for remembering whether the stop-button has been pushed between a floor (edge-case scenario)
  */
-void poll_floor_indicator(int* current_floor, int* between_floors, HardwareMovement driving_direction, int* stopped_between) {
+void poll_floor_indicators(int* current_floor, int* between_floors, HardwareMovement driving_direction, int* stopped_between) {
 
     for (int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
         if (hardware_read_floor_sensor(f)) {
@@ -88,10 +88,15 @@ static void sigint_handler(int sig){
 State current_state;
 time_t timer;
 HardwareMovement driving_direction;
+ /** @brief  Variable for storing the last registered floor */
 static int current_floor;
+/** @brief Variable for storing whether we are above, below or at a floor */
 static int between_floors;
+/** @brief Variable for remembering whether or not the door has been opened. */
 static int door_open;
+/** @brief Variable for storing if we have an order above, below or no order. */
 static int order_above;
+/** @brief Variable for remembering whether the elevator has been stopped between floors. */
 static int stopped_between;
 
 /**
@@ -117,7 +122,7 @@ int main(){
     hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
 
     while (current_floor == UNDEFINED) {
-        poll_floor_indicator(&current_floor, &between_floors, driving_direction, &stopped_between);
+        poll_floor_indicators(&current_floor, &between_floors, driving_direction, &stopped_between);
     }
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
     current_state = IDLE;
@@ -125,7 +130,7 @@ int main(){
     while (1) {
         hardware_command_stop_light(0);
         ordermanager_poll_order_sensors();
-        poll_floor_indicator(&current_floor, &between_floors, driving_direction, &stopped_between);        
+        poll_floor_indicators(&current_floor, &between_floors, driving_direction, &stopped_between);        
         
         if (door_open) {
             current_state = DOOR_OPEN;

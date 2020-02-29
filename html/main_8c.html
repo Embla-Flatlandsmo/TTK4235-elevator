@@ -65,7 +65,8 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">main.c File Reference</div>  </div>
 </div><!--header-->
@@ -122,13 +123,49 @@ Functions</h2></td></tr>
 <tr class="memitem:ae6abbf09322587b54b161dbad87c5459"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ae6abbf09322587b54b161dbad87c5459">timer_expired</a> (time_t startTime)</td></tr>
 <tr class="memdesc:ae6abbf09322587b54b161dbad87c5459"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking if the timer has expired.  <a href="#ae6abbf09322587b54b161dbad87c5459">More...</a><br /></td></tr>
 <tr class="separator:ae6abbf09322587b54b161dbad87c5459"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a887ea3f667e94b6bdedbd6c969eaf215"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a887ea3f667e94b6bdedbd6c969eaf215">poll_floor_indicator</a> (int *current_floor, int *between_floors, <a class="el" href="hardware_8h.html#a2167c399a24df296afc432bcb88228af">HardwareMovement</a> driving_direction, int *stopped_between)</td></tr>
+<tr class="memitem:a887ea3f667e94b6bdedbd6c969eaf215"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a887ea3f667e94b6bdedbd6c969eaf215">poll_floor_indicator</a> (int *<a class="el" href="main_8c.html#a53f0cf8d6c7426344a7336af4b06925a">current_floor</a>, int *<a class="el" href="main_8c.html#a0d38da447588f7234ad833be0b003306">between_floors</a>, <a class="el" href="hardware_8h.html#a2167c399a24df296afc432bcb88228af">HardwareMovement</a> driving_direction, int *<a class="el" href="main_8c.html#a913a15652cd2379397df0a3f1ec546d7">stopped_between</a>)</td></tr>
 <tr class="memdesc:a887ea3f667e94b6bdedbd6c969eaf215"><td class="mdescLeft">&#160;</td><td class="mdescRight">Polls all the floor indicators and updates the.  <a href="#a887ea3f667e94b6bdedbd6c969eaf215">More...</a><br /></td></tr>
 <tr class="separator:a887ea3f667e94b6bdedbd6c969eaf215"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed429b7c618757d735b6bea2609c229a"><td class="memItemLeft" align="right" valign="top"><a id="aed429b7c618757d735b6bea2609c229a"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aed429b7c618757d735b6bea2609c229a">sigint_handler</a> (int sig)</td></tr>
+<tr class="memdesc:aed429b7c618757d735b6bea2609c229a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling interrupts, results in program termination. <br /></td></tr>
+<tr class="separator:aed429b7c618757d735b6bea2609c229a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top"><a id="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
 <tr class="memdesc:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is where shit gets real. Contains the state machine :) <br /></td></tr>
 <tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a54138d08678dd972a2c9b13e069fd91a"><td class="memItemLeft" align="right" valign="top"><a id="a54138d08678dd972a2c9b13e069fd91a"></a>
+<a class="el" href="main_8c.html#a5d74787dedbc4e11c1ab15bf487e61f8">State</a>&#160;</td><td class="memItemRight" valign="bottom"><b>current_state</b></td></tr>
+<tr class="separator:a54138d08678dd972a2c9b13e069fd91a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2281da6157495d69406c35f69a61f9f"><td class="memItemLeft" align="right" valign="top"><a id="ae2281da6157495d69406c35f69a61f9f"></a>
+time_t&#160;</td><td class="memItemRight" valign="bottom"><b>timer</b></td></tr>
+<tr class="separator:ae2281da6157495d69406c35f69a61f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8438246f5ca0098b0037c5b312fff8c1"><td class="memItemLeft" align="right" valign="top"><a id="a8438246f5ca0098b0037c5b312fff8c1"></a>
+<a class="el" href="hardware_8h.html#a2167c399a24df296afc432bcb88228af">HardwareMovement</a>&#160;</td><td class="memItemRight" valign="bottom"><b>driving_direction</b></td></tr>
+<tr class="separator:a8438246f5ca0098b0037c5b312fff8c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53f0cf8d6c7426344a7336af4b06925a"><td class="memItemLeft" align="right" valign="top"><a id="a53f0cf8d6c7426344a7336af4b06925a"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a53f0cf8d6c7426344a7336af4b06925a">current_floor</a></td></tr>
+<tr class="memdesc:a53f0cf8d6c7426344a7336af4b06925a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable for storing the last registered floor. <br /></td></tr>
+<tr class="separator:a53f0cf8d6c7426344a7336af4b06925a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d38da447588f7234ad833be0b003306"><td class="memItemLeft" align="right" valign="top"><a id="a0d38da447588f7234ad833be0b003306"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a0d38da447588f7234ad833be0b003306">between_floors</a></td></tr>
+<tr class="memdesc:a0d38da447588f7234ad833be0b003306"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable for storing whether we are above, below or at a floor. <br /></td></tr>
+<tr class="separator:a0d38da447588f7234ad833be0b003306"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae51a4ae22a117093b5d112b7e1e81a1a"><td class="memItemLeft" align="right" valign="top"><a id="ae51a4ae22a117093b5d112b7e1e81a1a"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ae51a4ae22a117093b5d112b7e1e81a1a">door_open</a></td></tr>
+<tr class="memdesc:ae51a4ae22a117093b5d112b7e1e81a1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable for remembering whether or not the door has been opened. <br /></td></tr>
+<tr class="separator:ae51a4ae22a117093b5d112b7e1e81a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d8675459cb6e82c10194cc12b8ce846"><td class="memItemLeft" align="right" valign="top"><a id="a0d8675459cb6e82c10194cc12b8ce846"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a0d8675459cb6e82c10194cc12b8ce846">order_above</a></td></tr>
+<tr class="memdesc:a0d8675459cb6e82c10194cc12b8ce846"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable for storing if we have an order above, below or no order. <br /></td></tr>
+<tr class="separator:a0d8675459cb6e82c10194cc12b8ce846"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a913a15652cd2379397df0a3f1ec546d7"><td class="memItemLeft" align="right" valign="top"><a id="a913a15652cd2379397df0a3f1ec546d7"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a913a15652cd2379397df0a3f1ec546d7">stopped_between</a></td></tr>
+<tr class="memdesc:a913a15652cd2379397df0a3f1ec546d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable for remembering whether the elevator has been stopped between floors. <br /></td></tr>
+<tr class="separator:a913a15652cd2379397df0a3f1ec546d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>File containing the state machine for the elevator. </p>

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['newnode',['newNode',['../LinkedList_8h.html#a0c34d805d642cc31ced8ed2005936a33',1,'LinkedList.c']]],
-  ['node',['Node',['../structNode.html',1,'']]]
+  ['poll_5ffloor_5findicator',['poll_floor_indicator',['../main_8c.html#a887ea3f667e94b6bdedbd6c969eaf215',1,'main.c']]]
 ];
