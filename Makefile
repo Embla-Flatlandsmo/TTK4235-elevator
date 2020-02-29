@@ -1,4 +1,4 @@
-SOURCES := main.c NextFloorNegotiator.c
+SOURCES := main.c ordermanager.c
 
 SOURCE_DIR := source
 BUILD_DIR := build

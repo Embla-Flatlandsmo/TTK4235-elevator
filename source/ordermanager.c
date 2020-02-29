@@ -1,11 +1,11 @@
-#include "NextFloorNegotiator.h"
+#include "ordermanager.h"
 
 
 
 static int queue[HARDWARE_NUMBER_OF_FLOORS];
 
 
-int nfn_queue_is_empty(){ 
+int ordermanager_queue_is_empty(){ 
     for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
         if(queue[f] != 0){
             return 0;
@@ -14,14 +14,14 @@ int nfn_queue_is_empty(){
     return 1;
 }
 
-int nfn_at_ordered_floor(int current_floor) {
+int ordermanager_at_ordered_floor(int current_floor) {
     if (hardware_read_floor_sensor(current_floor) && queue[current_floor]) {
         return 1;
     } else { return 0; }
 }
 
 
-void nfn_add_order(int floor, HardwareOrder order_type) {
+void ordermanager_add_order(int floor, HardwareOrder order_type) {
     switch(order_type) {
         case HARDWARE_ORDER_UP:
             hardware_command_order_light(floor, HARDWARE_ORDER_UP, 1);
@@ -36,30 +36,30 @@ void nfn_add_order(int floor, HardwareOrder order_type) {
     queue[floor] = 1;
 }
 
-void nfn_poll_order_sensors() {
+void ordermanager_poll_order_sensors() {
     for (int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
         int up = hardware_read_order(f, HARDWARE_ORDER_UP);
         int inside = hardware_read_order(f, HARDWARE_ORDER_INSIDE);
         int down = hardware_read_order(f, HARDWARE_ORDER_DOWN);
 
         if (up) {
-            nfn_add_order(f, HARDWARE_ORDER_UP);
+            ordermanager_add_order(f, HARDWARE_ORDER_UP);
         }
 
         if (inside) {
-            nfn_add_order(f, HARDWARE_ORDER_INSIDE);
+            ordermanager_add_order(f, HARDWARE_ORDER_INSIDE);
         }
         
         if (down) {
-            nfn_add_order(f, HARDWARE_ORDER_DOWN);
+            ordermanager_add_order(f, HARDWARE_ORDER_DOWN);
         }
 
     }
 }
 
 
-int nfn_order_above(int current_floor, int between_floors, HardwareMovement driving_direction) {
-    if (nfn_queue_is_empty()) {
+int ordermanager_order_above_or_below(int current_floor, int between_floors, HardwareMovement driving_direction) {
+    if (ordermanager_queue_is_empty()) {
         return NO_ORDER_FOUND;
     }
 
@@ -89,7 +89,7 @@ int nfn_order_above(int current_floor, int between_floors, HardwareMovement driv
                     }
                 }
                 return ABOVE;
-            } else if (between_floors == BELOW) {
+            } else if (between_floors == BELOW || between_floors == ATFLOOR) {
                 for (int f = current_floor; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
                     if (queue[f]) {
                         return ABOVE;
@@ -102,7 +102,7 @@ int nfn_order_above(int current_floor, int between_floors, HardwareMovement driv
     return NO_ORDER_FOUND;//no orders
 }
 
-void nfn_clear_queue() {
+void ordermanager_clear_queue() {
     for (int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
         hardware_command_order_light(f, HARDWARE_ORDER_DOWN, 0);
         hardware_command_order_light(f, HARDWARE_ORDER_UP, 0);
@@ -111,7 +111,7 @@ void nfn_clear_queue() {
     }
 }
 
-void nfn_remove_order(int floor, HardwareMovement driving_direction) {
+void ordermanager_remove_order(int floor, HardwareMovement driving_direction) {
     queue[floor] = 0;
     hardware_command_order_light(floor, HARDWARE_ORDER_UP, 0);
     hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 0);

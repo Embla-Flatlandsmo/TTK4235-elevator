@@ -1,0 +1,124 @@
+\hypertarget{main_8c}{}\section{source/main.c File Reference}
+\label{main_8c}\index{source/main.\+c@{source/main.\+c}}
+
+
+File containing the state machine for the elevator.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}hardware.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}ordermanager.\+h\char`\"{}}\newline
+Include dependency graph for main.\+c\+:
+% FIG 0
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8c_a1354b70ac6803a06beebe84f61b5f95b}\label{main_8c_a1354b70ac6803a06beebe84f61b5f95b}} 
+\#define {\bfseries O\+P\+EN}~1
+\item 
+\mbox{\Hypertarget{main_8c_ad6664b6aa0b2ec18771fe01aefa1e760}\label{main_8c_ad6664b6aa0b2ec18771fe01aefa1e760}} 
+\#define {\bfseries C\+L\+O\+S\+ED}~0
+\item 
+\mbox{\Hypertarget{main_8c_a2dc3870be25a19efa2940150507aaf71}\label{main_8c_a2dc3870be25a19efa2940150507aaf71}} 
+\#define {\bfseries U\+N\+D\+E\+F\+I\+N\+ED}~-\/1
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8c_a5d74787dedbc4e11c1ab15bf487e61f8}\label{main_8c_a5d74787dedbc4e11c1ab15bf487e61f8}} 
+enum \hyperlink{main_8c_a5d74787dedbc4e11c1ab15bf487e61f8}{State} \{ \newline
+{\bfseries D\+R\+I\+V\+E\+\_\+\+D\+O\+WN}, 
+{\bfseries I\+D\+LE}, 
+{\bfseries D\+O\+O\+R\+\_\+\+O\+P\+EN}, 
+{\bfseries D\+R\+I\+V\+E\+\_\+\+UP}, 
+\newline
+{\bfseries S\+T\+OP}
+ \}\begin{DoxyCompactList}\small\item\em State type used in the state machine. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+time\+\_\+t \hyperlink{main_8c_a8f53cb31f6d9093feaa897c095057e3d}{start\+\_\+timer} ()
+\begin{DoxyCompactList}\small\item\em Function for starting the timer. \end{DoxyCompactList}\item 
+int \hyperlink{main_8c_ae6abbf09322587b54b161dbad87c5459}{timer\+\_\+expired} (time\+\_\+t start\+Time)
+\begin{DoxyCompactList}\small\item\em Function for checking if the timer has expired. \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_a887ea3f667e94b6bdedbd6c969eaf215}{poll\+\_\+floor\+\_\+indicator} (int $\ast$current\+\_\+floor, int $\ast$between\+\_\+floors, \hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement} driving\+\_\+direction, int $\ast$stopped\+\_\+between)
+\begin{DoxyCompactList}\small\item\em Polls all the floor indicators and updates the. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+int \hyperlink{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+\begin{DoxyCompactList}\small\item\em This is where shit gets real. Contains the state machine \+:) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+File containing the state machine for the elevator. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{main_8c_a887ea3f667e94b6bdedbd6c969eaf215}\label{main_8c_a887ea3f667e94b6bdedbd6c969eaf215}} 
+\index{main.\+c@{main.\+c}!poll\+\_\+floor\+\_\+indicator@{poll\+\_\+floor\+\_\+indicator}}
+\index{poll\+\_\+floor\+\_\+indicator@{poll\+\_\+floor\+\_\+indicator}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{poll\+\_\+floor\+\_\+indicator()}{poll\_floor\_indicator()}}
+{\footnotesize\ttfamily void poll\+\_\+floor\+\_\+indicator (\begin{DoxyParamCaption}\item[{int $\ast$}]{current\+\_\+floor,  }\item[{int $\ast$}]{between\+\_\+floors,  }\item[{\hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement}}]{driving\+\_\+direction,  }\item[{int $\ast$}]{stopped\+\_\+between }\end{DoxyParamCaption})}
+
+
+
+Polls all the floor indicators and updates the. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em current\+\_\+floor} & Variable for storing which floor was last registered. \\
+\hline
+\mbox{\tt in,out}  & {\em between\+\_\+floors} & Variable for storing whether we are above (1), below (-\/1) or at (0) a floor. \\
+\hline
+\mbox{\tt in}  & {\em driving\+\_\+direction} & Elevator\textquotesingle{}s driving direction \\
+\hline
+\mbox{\tt in,out}  & {\em stopped\+\_\+between} & Variable for remembering whether the stop-\/button has been pushed between a floor (edge-\/case scenario) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 58 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a8f53cb31f6d9093feaa897c095057e3d}\label{main_8c_a8f53cb31f6d9093feaa897c095057e3d}} 
+\index{main.\+c@{main.\+c}!start\+\_\+timer@{start\+\_\+timer}}
+\index{start\+\_\+timer@{start\+\_\+timer}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{start\+\_\+timer()}{start\_timer()}}
+{\footnotesize\ttfamily time\+\_\+t start\+\_\+timer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Function for starting the timer. 
+
+\begin{DoxyReturn}{Returns}
+Starting time. 
+\end{DoxyReturn}
+
+
+Definition at line 35 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_ae6abbf09322587b54b161dbad87c5459}\label{main_8c_ae6abbf09322587b54b161dbad87c5459}} 
+\index{main.\+c@{main.\+c}!timer\+\_\+expired@{timer\+\_\+expired}}
+\index{timer\+\_\+expired@{timer\+\_\+expired}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{timer\+\_\+expired()}{timer\_expired()}}
+{\footnotesize\ttfamily int timer\+\_\+expired (\begin{DoxyParamCaption}\item[{time\+\_\+t}]{start\+Time }\end{DoxyParamCaption})}
+
+
+
+Function for checking if the timer has expired. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em start\+Time} & Starting time \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if 3 seconds have passed since {\ttfamily start\+Time}, 0 otherwise. 
+\end{DoxyReturn}
+
+
+Definition at line 44 of file main.\+c.
+

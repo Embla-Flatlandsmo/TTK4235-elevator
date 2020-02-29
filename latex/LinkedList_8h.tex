@@ -1,0 +1,251 @@
+\hypertarget{LinkedList_8h}{}\section{source/\+Linked\+List.h File Reference}
+\label{LinkedList_8h}\index{source/\+Linked\+List.\+h@{source/\+Linked\+List.\+h}}
+
+
+Data structure for linked lists.  
+
+
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}hardware.\+h\char`\"{}}\newline
+Include dependency graph for Linked\+List.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structFloorOrder}{Floor\+Order}
+\begin{DoxyCompactList}\small\item\em Struct that gives which floor is being ordered, and which type of order it is. \end{DoxyCompactList}\item 
+struct \hyperlink{structNode}{Node}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structNode}{Node} $\ast$ \hyperlink{LinkedList_8h_a0c34d805d642cc31ced8ed2005936a33}{new\+Node} (\hyperlink{structFloorOrder}{Floor\+Order} new\+\_\+data)
+\begin{DoxyCompactList}\small\item\em Utility function for creating a new node. \end{DoxyCompactList}\item 
+int \hyperlink{LinkedList_8h_a0958da3375d687483600b30f02849626}{is\+Empty} (struct \hyperlink{structNode}{Node} $\ast$$\ast$head\+\_\+ref)
+\begin{DoxyCompactList}\small\item\em Checks if the linked list is empty. \end{DoxyCompactList}\item 
+void \hyperlink{LinkedList_8h_ae257234a4a23b5088d3cdb5ccbb94ff5}{delete\+List} (struct \hyperlink{structNode}{Node} $\ast$$\ast$head\+\_\+ref)
+\begin{DoxyCompactList}\small\item\em Deletes the entire list and frees up the memory. \end{DoxyCompactList}\item 
+void \hyperlink{LinkedList_8h_a274c660292b2a579bda81785eb87f487}{push} (struct \hyperlink{structNode}{Node} $\ast$$\ast$head\+\_\+ref, \hyperlink{structFloorOrder}{Floor\+Order} new\+\_\+data)
+\begin{DoxyCompactList}\small\item\em Pushes a new node to the front of the list. \end{DoxyCompactList}\item 
+\hyperlink{structFloorOrder}{Floor\+Order} \hyperlink{LinkedList_8h_a364d98b38ed33bf2adbf6843ded3fc31}{read\+First\+Node} (struct \hyperlink{structNode}{Node} $\ast$$\ast$head\+\_\+ref)
+\begin{DoxyCompactList}\small\item\em Reads the data in the head of the list. \end{DoxyCompactList}\item 
+void \hyperlink{LinkedList_8h_ae4a7630a8c692c98f9a08f641766b518}{delete\+First\+Node} (struct \hyperlink{structNode}{Node} $\ast$$\ast$head\+\_\+ref)
+\begin{DoxyCompactList}\small\item\em Deletes the head node and sets the predecessor to. \end{DoxyCompactList}\item 
+\hyperlink{structFloorOrder}{Floor\+Order} \hyperlink{LinkedList_8h_aa361061459403c3d25b5a700e463b4ee}{pop} (struct \hyperlink{structNode}{Node} $\ast$$\ast$head\+\_\+ref)
+\begin{DoxyCompactList}\small\item\em Retrieves the node at the front of the list and deletes it. \end{DoxyCompactList}\item 
+void \hyperlink{LinkedList_8h_a067be51372ecb89d49d60f47f95f9956}{ascending\+Insert} (struct \hyperlink{structNode}{Node} $\ast$$\ast$head\+\_\+ref, struct \hyperlink{structNode}{Node} $\ast$new\+\_\+node)
+\begin{DoxyCompactList}\small\item\em Inserts new node in ascending order (ex. 1-\/$>$3-\/$>$8) \end{DoxyCompactList}\item 
+void \hyperlink{LinkedList_8h_ad17eec711d1729c331137fa468f4b76b}{descending\+Insert} (struct \hyperlink{structNode}{Node} $\ast$$\ast$head\+\_\+ref, struct \hyperlink{structNode}{Node} $\ast$new\+\_\+node)
+\begin{DoxyCompactList}\small\item\em Inserts new node in descending order (ex. 8-\/$>$3-\/$>$1) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Data structure for linked lists. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{LinkedList_8h_a067be51372ecb89d49d60f47f95f9956}\label{LinkedList_8h_a067be51372ecb89d49d60f47f95f9956}} 
+\index{Linked\+List.\+h@{Linked\+List.\+h}!ascending\+Insert@{ascending\+Insert}}
+\index{ascending\+Insert@{ascending\+Insert}!Linked\+List.\+h@{Linked\+List.\+h}}
+\subsubsection{\texorpdfstring{ascending\+Insert()}{ascendingInsert()}}
+{\footnotesize\ttfamily void ascending\+Insert (\begin{DoxyParamCaption}\item[{struct \hyperlink{structNode}{Node} $\ast$$\ast$}]{head\+\_\+ref,  }\item[{struct \hyperlink{structNode}{Node} $\ast$}]{new\+\_\+node }\end{DoxyParamCaption})}
+
+
+
+Inserts new node in ascending order (ex. 1-\/$>$3-\/$>$8) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em head\+\_\+ref} & Pointer to the head pointer. \\
+\hline
+{\em new\+\_\+node} & New node to be inserted into the list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Only use nodes with data types that can be sorted such as floats, ints or char. 
+\end{DoxyWarning}
+
+
+Definition at line 93 of file Linked\+List.\+c.
+
+\mbox{\Hypertarget{LinkedList_8h_ae4a7630a8c692c98f9a08f641766b518}\label{LinkedList_8h_ae4a7630a8c692c98f9a08f641766b518}} 
+\index{Linked\+List.\+h@{Linked\+List.\+h}!delete\+First\+Node@{delete\+First\+Node}}
+\index{delete\+First\+Node@{delete\+First\+Node}!Linked\+List.\+h@{Linked\+List.\+h}}
+\subsubsection{\texorpdfstring{delete\+First\+Node()}{deleteFirstNode()}}
+{\footnotesize\ttfamily void delete\+First\+Node (\begin{DoxyParamCaption}\item[{struct \hyperlink{structNode}{Node} $\ast$$\ast$}]{head\+\_\+ref }\end{DoxyParamCaption})}
+
+
+
+Deletes the head node and sets the predecessor to. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em head\+\_\+ref} & Pointer to the head pointer. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 64 of file Linked\+List.\+c.
+
+\mbox{\Hypertarget{LinkedList_8h_ae257234a4a23b5088d3cdb5ccbb94ff5}\label{LinkedList_8h_ae257234a4a23b5088d3cdb5ccbb94ff5}} 
+\index{Linked\+List.\+h@{Linked\+List.\+h}!delete\+List@{delete\+List}}
+\index{delete\+List@{delete\+List}!Linked\+List.\+h@{Linked\+List.\+h}}
+\subsubsection{\texorpdfstring{delete\+List()}{deleteList()}}
+{\footnotesize\ttfamily void delete\+List (\begin{DoxyParamCaption}\item[{struct \hyperlink{structNode}{Node} $\ast$$\ast$}]{head\+\_\+ref }\end{DoxyParamCaption})}
+
+
+
+Deletes the entire list and frees up the memory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em head\+\_\+ref} & Pointer to the head pointer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Does not delete the head pointer. This needs to be deleted manually. 
+\end{DoxyWarning}
+
+
+Definition at line 29 of file Linked\+List.\+c.
+
+\mbox{\Hypertarget{LinkedList_8h_ad17eec711d1729c331137fa468f4b76b}\label{LinkedList_8h_ad17eec711d1729c331137fa468f4b76b}} 
+\index{Linked\+List.\+h@{Linked\+List.\+h}!descending\+Insert@{descending\+Insert}}
+\index{descending\+Insert@{descending\+Insert}!Linked\+List.\+h@{Linked\+List.\+h}}
+\subsubsection{\texorpdfstring{descending\+Insert()}{descendingInsert()}}
+{\footnotesize\ttfamily void descending\+Insert (\begin{DoxyParamCaption}\item[{struct \hyperlink{structNode}{Node} $\ast$$\ast$}]{head\+\_\+ref,  }\item[{struct \hyperlink{structNode}{Node} $\ast$}]{new\+\_\+node }\end{DoxyParamCaption})}
+
+
+
+Inserts new node in descending order (ex. 8-\/$>$3-\/$>$1) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em head\+\_\+ref} & Pointer to the head pointer. \\
+\hline
+{\em new\+\_\+node} & New node to be inserted into the list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Only use nodes with data types that can be sorted such as floats, ints or char. 
+\end{DoxyWarning}
+
+
+Definition at line 114 of file Linked\+List.\+c.
+
+\mbox{\Hypertarget{LinkedList_8h_a0958da3375d687483600b30f02849626}\label{LinkedList_8h_a0958da3375d687483600b30f02849626}} 
+\index{Linked\+List.\+h@{Linked\+List.\+h}!is\+Empty@{is\+Empty}}
+\index{is\+Empty@{is\+Empty}!Linked\+List.\+h@{Linked\+List.\+h}}
+\subsubsection{\texorpdfstring{is\+Empty()}{isEmpty()}}
+{\footnotesize\ttfamily int is\+Empty (\begin{DoxyParamCaption}\item[{struct \hyperlink{structNode}{Node} $\ast$$\ast$}]{head\+\_\+ref }\end{DoxyParamCaption})}
+
+
+
+Checks if the linked list is empty. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em head\+\_\+ref} & Pointer to the head pointer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if list is empty, 0 otherwise. 
+\end{DoxyReturn}
+
+
+Definition at line 20 of file Linked\+List.\+c.
+
+\mbox{\Hypertarget{LinkedList_8h_a0c34d805d642cc31ced8ed2005936a33}\label{LinkedList_8h_a0c34d805d642cc31ced8ed2005936a33}} 
+\index{Linked\+List.\+h@{Linked\+List.\+h}!new\+Node@{new\+Node}}
+\index{new\+Node@{new\+Node}!Linked\+List.\+h@{Linked\+List.\+h}}
+\subsubsection{\texorpdfstring{new\+Node()}{newNode()}}
+{\footnotesize\ttfamily struct \hyperlink{structNode}{Node}$\ast$ new\+Node (\begin{DoxyParamCaption}\item[{\hyperlink{structFloorOrder}{Floor\+Order}}]{new\+\_\+data }\end{DoxyParamCaption})}
+
+
+
+Utility function for creating a new node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+data} & Data to be contained in node. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new node. 
+\end{DoxyReturn}
+
+
+Definition at line 7 of file Linked\+List.\+c.
+
+\mbox{\Hypertarget{LinkedList_8h_aa361061459403c3d25b5a700e463b4ee}\label{LinkedList_8h_aa361061459403c3d25b5a700e463b4ee}} 
+\index{Linked\+List.\+h@{Linked\+List.\+h}!pop@{pop}}
+\index{pop@{pop}!Linked\+List.\+h@{Linked\+List.\+h}}
+\subsubsection{\texorpdfstring{pop()}{pop()}}
+{\footnotesize\ttfamily \hyperlink{structFloorOrder}{Floor\+Order} pop (\begin{DoxyParamCaption}\item[{struct \hyperlink{structNode}{Node} $\ast$$\ast$}]{head\+\_\+ref }\end{DoxyParamCaption})}
+
+
+
+Retrieves the node at the front of the list and deletes it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em head\+\_\+ref} & Pointer to the head pointer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/1 if list is empty, otherwise data contained in the node at the front of the list. 
+\end{DoxyReturn}
+
+
+Definition at line 75 of file Linked\+List.\+c.
+
+\mbox{\Hypertarget{LinkedList_8h_a274c660292b2a579bda81785eb87f487}\label{LinkedList_8h_a274c660292b2a579bda81785eb87f487}} 
+\index{Linked\+List.\+h@{Linked\+List.\+h}!push@{push}}
+\index{push@{push}!Linked\+List.\+h@{Linked\+List.\+h}}
+\subsubsection{\texorpdfstring{push()}{push()}}
+{\footnotesize\ttfamily void push (\begin{DoxyParamCaption}\item[{struct \hyperlink{structNode}{Node} $\ast$$\ast$}]{head\+\_\+ref,  }\item[{\hyperlink{structFloorOrder}{Floor\+Order}}]{new\+\_\+data }\end{DoxyParamCaption})}
+
+
+
+Pushes a new node to the front of the list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em head\+\_\+ref} & Pointer to the head pointer. \\
+\hline
+{\em new\+\_\+data} & data to be contained in the new node. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 44 of file Linked\+List.\+c.
+
+\mbox{\Hypertarget{LinkedList_8h_a364d98b38ed33bf2adbf6843ded3fc31}\label{LinkedList_8h_a364d98b38ed33bf2adbf6843ded3fc31}} 
+\index{Linked\+List.\+h@{Linked\+List.\+h}!read\+First\+Node@{read\+First\+Node}}
+\index{read\+First\+Node@{read\+First\+Node}!Linked\+List.\+h@{Linked\+List.\+h}}
+\subsubsection{\texorpdfstring{read\+First\+Node()}{readFirstNode()}}
+{\footnotesize\ttfamily \hyperlink{structFloorOrder}{Floor\+Order} read\+First\+Node (\begin{DoxyParamCaption}\item[{struct \hyperlink{structNode}{Node} $\ast$$\ast$}]{head\+\_\+ref }\end{DoxyParamCaption})}
+
+
+
+Reads the data in the head of the list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em head\+\_\+ref} & Pointer to the head pointer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Value of the data in the head. -\/1 if the list is empty. 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Does not delete the first node. 
+\end{DoxyWarning}
+
+
+Definition at line 60 of file Linked\+List.\+c.
+

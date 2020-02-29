@@ -1,0 +1,158 @@
+\hypertarget{ordermanager_8h}{}\section{source/ordermanager.h File Reference}
+\label{ordermanager_8h}\index{source/ordermanager.\+h@{source/ordermanager.\+h}}
+
+
+Module for managing orders, determining where to go and determining where to stop.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}hardware.\+h\char`\"{}}\newline
+Include dependency graph for ordermanager.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{ordermanager_8h_a72a04a29900e244c3518f83a7e611bcd}\label{ordermanager_8h_a72a04a29900e244c3518f83a7e611bcd}} 
+\#define {\bfseries A\+B\+O\+VE}~1
+\item 
+\mbox{\Hypertarget{ordermanager_8h_a2dee3b8c8fb350424bf8ab6bf17540d1}\label{ordermanager_8h_a2dee3b8c8fb350424bf8ab6bf17540d1}} 
+\#define {\bfseries B\+E\+L\+OW}~-\/1
+\item 
+\mbox{\Hypertarget{ordermanager_8h_a6bd00f950495e07cfb70f21389fc35a8}\label{ordermanager_8h_a6bd00f950495e07cfb70f21389fc35a8}} 
+\#define {\bfseries A\+T\+F\+L\+O\+OR}~0
+\item 
+\mbox{\Hypertarget{ordermanager_8h_a9b2775d6a86be44fae56df54608f2b39}\label{ordermanager_8h_a9b2775d6a86be44fae56df54608f2b39}} 
+\#define {\bfseries N\+O\+\_\+\+O\+R\+D\+E\+R\+\_\+\+F\+O\+U\+ND}~0
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{ordermanager_8h_a64d250f3410bbbed5aed91fc0f1e7c4c}{ordermanager\+\_\+at\+\_\+ordered\+\_\+floor} (int current\+\_\+floor)
+\begin{DoxyCompactList}\small\item\em checks if the current floor contains an order. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{ordermanager_8h_afee2dada0440ec8dd5dfc3dfd0a55e21}\label{ordermanager_8h_afee2dada0440ec8dd5dfc3dfd0a55e21}} 
+void \hyperlink{ordermanager_8h_afee2dada0440ec8dd5dfc3dfd0a55e21}{ordermanager\+\_\+poll\+\_\+order\+\_\+sensors} ()
+\begin{DoxyCompactList}\small\item\em Polls all the floor sensors and puts them in the queue. Also turns on the order lights. \end{DoxyCompactList}\item 
+void \hyperlink{ordermanager_8h_a172d4bb314f837215f77f580a8a7fbb5}{ordermanager\+\_\+add\+\_\+orders} (int floor, \hyperlink{hardware_8h_a796a8de8ce0ae769d7dbd3327a7bdbe7}{Hardware\+Order} order\+\_\+type)
+\begin{DoxyCompactList}\small\item\em Adds order to the queue. Used in ordermanager\+\_\+poll\+\_\+order\+\_\+sensors. \end{DoxyCompactList}\item 
+int \hyperlink{ordermanager_8h_a1ac5420fa14000ed2b12b88dfa11f985}{ordermanager\+\_\+order\+\_\+above\+\_\+or\+\_\+below} (int current\+\_\+floor, int between\+\_\+floors, \hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement} driving\+\_\+direction)
+\begin{DoxyCompactList}\small\item\em Checks if there are orders above or below the current floor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{ordermanager_8h_ad42c02ab4e2e8f482043e622be2bc16c}\label{ordermanager_8h_ad42c02ab4e2e8f482043e622be2bc16c}} 
+void \hyperlink{ordermanager_8h_ad42c02ab4e2e8f482043e622be2bc16c}{ordermanager\+\_\+clear\+\_\+queue} ()
+\begin{DoxyCompactList}\small\item\em sets all of the queue\textquotesingle{}s entries to 0. Also turns all the order lights off. \end{DoxyCompactList}\item 
+void \hyperlink{ordermanager_8h_ae97f50a02cdaad404363cb043c77c1d5}{ordermanager\+\_\+remove\+\_\+order} (int floor, \hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement} driving\+\_\+direction)
+\begin{DoxyCompactList}\small\item\em Removes an order from the queue. \end{DoxyCompactList}\item 
+int \hyperlink{ordermanager_8h_a940b9a025d01b330d9cc804747318b20}{ordermanager\+\_\+queue\+\_\+is\+\_\+empty} ()
+\begin{DoxyCompactList}\small\item\em Checks if the queue is empty. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for managing orders, determining where to go and determining where to stop. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{ordermanager_8h_a172d4bb314f837215f77f580a8a7fbb5}\label{ordermanager_8h_a172d4bb314f837215f77f580a8a7fbb5}} 
+\index{ordermanager.\+h@{ordermanager.\+h}!ordermanager\+\_\+add\+\_\+orders@{ordermanager\+\_\+add\+\_\+orders}}
+\index{ordermanager\+\_\+add\+\_\+orders@{ordermanager\+\_\+add\+\_\+orders}!ordermanager.\+h@{ordermanager.\+h}}
+\subsubsection{\texorpdfstring{ordermanager\+\_\+add\+\_\+orders()}{ordermanager\_add\_orders()}}
+{\footnotesize\ttfamily void ordermanager\+\_\+add\+\_\+orders (\begin{DoxyParamCaption}\item[{int}]{floor,  }\item[{\hyperlink{hardware_8h_a796a8de8ce0ae769d7dbd3327a7bdbe7}{Hardware\+Order}}]{order\+\_\+type }\end{DoxyParamCaption})}
+
+
+
+Adds order to the queue. Used in ordermanager\+\_\+poll\+\_\+order\+\_\+sensors. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em floor} & floor to be added to queue \\
+\hline
+\mbox{\tt in}  & {\em order\+\_\+type} & order type to be added to queue \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{ordermanager_8h_a64d250f3410bbbed5aed91fc0f1e7c4c}\label{ordermanager_8h_a64d250f3410bbbed5aed91fc0f1e7c4c}} 
+\index{ordermanager.\+h@{ordermanager.\+h}!ordermanager\+\_\+at\+\_\+ordered\+\_\+floor@{ordermanager\+\_\+at\+\_\+ordered\+\_\+floor}}
+\index{ordermanager\+\_\+at\+\_\+ordered\+\_\+floor@{ordermanager\+\_\+at\+\_\+ordered\+\_\+floor}!ordermanager.\+h@{ordermanager.\+h}}
+\subsubsection{\texorpdfstring{ordermanager\+\_\+at\+\_\+ordered\+\_\+floor()}{ordermanager\_at\_ordered\_floor()}}
+{\footnotesize\ttfamily int ordermanager\+\_\+at\+\_\+ordered\+\_\+floor (\begin{DoxyParamCaption}\item[{int}]{current\+\_\+floor }\end{DoxyParamCaption})}
+
+
+
+checks if the current floor contains an order. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em current\+\_\+floor} & current floor. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if we are at a floor with an order, 0 otherwise. 
+\end{DoxyReturn}
+
+
+Definition at line 17 of file ordermanager.\+c.
+
+\mbox{\Hypertarget{ordermanager_8h_a1ac5420fa14000ed2b12b88dfa11f985}\label{ordermanager_8h_a1ac5420fa14000ed2b12b88dfa11f985}} 
+\index{ordermanager.\+h@{ordermanager.\+h}!ordermanager\+\_\+order\+\_\+above\+\_\+or\+\_\+below@{ordermanager\+\_\+order\+\_\+above\+\_\+or\+\_\+below}}
+\index{ordermanager\+\_\+order\+\_\+above\+\_\+or\+\_\+below@{ordermanager\+\_\+order\+\_\+above\+\_\+or\+\_\+below}!ordermanager.\+h@{ordermanager.\+h}}
+\subsubsection{\texorpdfstring{ordermanager\+\_\+order\+\_\+above\+\_\+or\+\_\+below()}{ordermanager\_order\_above\_or\_below()}}
+{\footnotesize\ttfamily int ordermanager\+\_\+order\+\_\+above\+\_\+or\+\_\+below (\begin{DoxyParamCaption}\item[{int}]{current\+\_\+floor,  }\item[{int}]{between\+\_\+floors,  }\item[{\hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement}}]{driving\+\_\+direction }\end{DoxyParamCaption})}
+
+
+
+Checks if there are orders above or below the current floor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em current\+\_\+floor} & elevator\textquotesingle{}s current floor \\
+\hline
+\mbox{\tt in}  & {\em driving\+\_\+direction} & elevator\textquotesingle{}s driving direction \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if next order is above, -\/1 if next order is below, 0 if there are no orders. 
+\end{DoxyReturn}
+
+
+Definition at line 61 of file ordermanager.\+c.
+
+\mbox{\Hypertarget{ordermanager_8h_a940b9a025d01b330d9cc804747318b20}\label{ordermanager_8h_a940b9a025d01b330d9cc804747318b20}} 
+\index{ordermanager.\+h@{ordermanager.\+h}!ordermanager\+\_\+queue\+\_\+is\+\_\+empty@{ordermanager\+\_\+queue\+\_\+is\+\_\+empty}}
+\index{ordermanager\+\_\+queue\+\_\+is\+\_\+empty@{ordermanager\+\_\+queue\+\_\+is\+\_\+empty}!ordermanager.\+h@{ordermanager.\+h}}
+\subsubsection{\texorpdfstring{ordermanager\+\_\+queue\+\_\+is\+\_\+empty()}{ordermanager\_queue\_is\_empty()}}
+{\footnotesize\ttfamily int ordermanager\+\_\+queue\+\_\+is\+\_\+empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Checks if the queue is empty. 
+
+\begin{DoxyReturn}{Returns}
+1 if empty, 0 otherwise. 
+\end{DoxyReturn}
+
+
+Definition at line 8 of file ordermanager.\+c.
+
+\mbox{\Hypertarget{ordermanager_8h_ae97f50a02cdaad404363cb043c77c1d5}\label{ordermanager_8h_ae97f50a02cdaad404363cb043c77c1d5}} 
+\index{ordermanager.\+h@{ordermanager.\+h}!ordermanager\+\_\+remove\+\_\+order@{ordermanager\+\_\+remove\+\_\+order}}
+\index{ordermanager\+\_\+remove\+\_\+order@{ordermanager\+\_\+remove\+\_\+order}!ordermanager.\+h@{ordermanager.\+h}}
+\subsubsection{\texorpdfstring{ordermanager\+\_\+remove\+\_\+order()}{ordermanager\_remove\_order()}}
+{\footnotesize\ttfamily void ordermanager\+\_\+remove\+\_\+order (\begin{DoxyParamCaption}\item[{int}]{floor,  }\item[{\hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement}}]{driving\+\_\+direction }\end{DoxyParamCaption})}
+
+
+
+Removes an order from the queue. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em floor} & Floor to be removed \\
+\hline
+\mbox{\tt in}  & {\em driving\+\_\+direction} & Elevator\textquotesingle{}s driving direction. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 114 of file ordermanager.\+c.
+

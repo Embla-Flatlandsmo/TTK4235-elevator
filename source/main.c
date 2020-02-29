@@ -1,9 +1,14 @@
+/**
+ * @file
+ * @brief File containing the state machine for the elevator.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
 #include <time.h>
 #include "hardware.h"
-#include "NextFloorNegotiator.h"
+#include "ordermanager.h"
 
 #define OPEN 1
 #define CLOSED 0
@@ -11,7 +16,9 @@
 
 
 
-
+/**
+ * @brief State type used in the state machine.
+ */
 typedef enum {
     DRIVE_DOWN,
     IDLE,
@@ -20,10 +27,20 @@ typedef enum {
     STOP
 } State;
 
+
+/**
+ * @brief Function for starting the timer.
+ * @return Starting time.
+ */
 time_t start_timer() {
 	return time(NULL); 
 }
 
+/**
+ * @brief Function for checking if the timer has expired.
+ * @param[in] startTime Starting time
+ * @return 1 if 3 seconds have passed since @p startTime, 0 otherwise.
+ */
 int timer_expired(time_t startTime){
 	time_t end_time = time(NULL);
 	if (end_time - startTime >= 3){ 
@@ -31,31 +48,36 @@ int timer_expired(time_t startTime){
 	}
 	return 0;
 }
+/**
+ * @brief Polls all the floor indicators and updates the 
+ * @param[in, out]  current_floor Variable for storing which floor was last registered.
+ * @param[in, out]  between_floors Variable for storing whether we are above (1), below (-1) or at (0) a floor.
+ * @param[in]   driving_direction Elevator's driving direction
+ * @param[in, out]  stopped_between Variable for remembering whether the stop-button has been pushed between a floor (edge-case scenario)
+ */
+void poll_floor_indicator(int* current_floor, int* between_floors, HardwareMovement driving_direction, int* stopped_between) {
 
-void poll_floor_indicator(int* current_floor, int* between_floors, HardwareMovement driving_direction) {
-
-    if (driving_direction == HARDWARE_MOVEMENT_STOP) {
-        
-    }
-    int old_current_floor = *current_floor;
     for (int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
         if (hardware_read_floor_sensor(f)) {
             hardware_command_floor_indicator_on(f);
             *between_floors = ATFLOOR;
             *current_floor = f;
+            *stopped_between = 0;
             return;
         }
     }
-    if (driving_direction == HARDWARE_MOVEMENT_DOWN && old_current_floor != current_floor) {
+    if(*stopped_between){
+        return;
+    } else if (driving_direction == HARDWARE_MOVEMENT_DOWN) {
         *between_floors = BELOW;
     } else if (driving_direction == HARDWARE_MOVEMENT_UP) {
         *between_floors = ABOVE;
-    } else if(driving_direction == HARDWARE_MOVEMENT_STOP && old_current_floor == current_floor){
-
     }
 }
 
-
+/**
+ * @brief Function for handling interrupts, results in program termination.
+ */
 static void sigint_handler(int sig){
     (void)(sig);
     printf("Terminating elevator\n");
@@ -63,7 +85,18 @@ static void sigint_handler(int sig){
     exit(0);
 }
 
+State current_state;
+time_t timer;
+HardwareMovement driving_direction;
+static int current_floor;
+static int between_floors;
+static int door_open;
+static int order_above;
+static int stopped_between;
 
+/**
+ * @brief This is where shit gets real. Contains the state machine :)
+ */
 int main(){
     int error = hardware_init();
     if(error != 0){
@@ -73,29 +106,27 @@ int main(){
 
     signal(SIGINT, sigint_handler);
 
-    State current_state;
-    time_t timer;
-    HardwareMovement driving_direction = HARDWARE_MOVEMENT_DOWN;
-    static int current_floor = UNDEFINED;
-    static int between_floors;
-    static int door_open = CLOSED;
-    int order_above;
+
+    driving_direction = HARDWARE_MOVEMENT_DOWN;
+    current_floor = UNDEFINED;
+    door_open = CLOSED;
+    stopped_between = 0;
 
     // Initial move down
-    nfn_clear_queue();
+    ordermanager_clear_queue();
     hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
 
     while (current_floor == UNDEFINED) {
-        poll_floor_indicator(&current_floor, &between_floors, driving_direction);
+        poll_floor_indicator(&current_floor, &between_floors, driving_direction, &stopped_between);
     }
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
     current_state = IDLE;
 
     while (1) {
         hardware_command_stop_light(0);
-        nfn_poll_order_sensors();
-        poll_floor_indicator(&current_floor, &between_floors, driving_direction);
-
+        ordermanager_poll_order_sensors();
+        poll_floor_indicator(&current_floor, &between_floors, driving_direction, &stopped_between);        
+        
         if (door_open) {
             current_state = DOOR_OPEN;
         }
@@ -109,11 +140,11 @@ int main(){
         switch (current_state) {
             case IDLE:
 
-                order_above = nfn_order_above(current_floor, between_floors, driving_direction);
+                order_above = ordermanager_order_above_or_below(current_floor, between_floors, driving_direction);
 
-                if (nfn_at_ordered_floor(current_floor) && between_floors == ATFLOOR){
+                if (ordermanager_at_ordered_floor(current_floor) && between_floors == ATFLOOR){
                     hardware_command_door_open(1);
-                    nfn_remove_order(current_floor, driving_direction);
+                    ordermanager_remove_order(current_floor, driving_direction);
                     timer = start_timer();
                     door_open = OPEN;                    
                     current_state = DOOR_OPEN;
@@ -146,7 +177,7 @@ int main(){
                 break;
             
             case DRIVE_UP:
-                if (nfn_at_ordered_floor(current_floor) && (between_floors == ATFLOOR)) {
+                if (ordermanager_at_ordered_floor(current_floor) && (between_floors == ATFLOOR)) {
                     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
                     current_state = IDLE;
                     break;
@@ -154,7 +185,7 @@ int main(){
                 break;
 
             case DRIVE_DOWN:
-                if (nfn_at_ordered_floor(current_floor) && (between_floors == ATFLOOR)) {
+                if (ordermanager_at_ordered_floor(current_floor) && (between_floors == ATFLOOR)) {
                     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
                     current_state = IDLE;
                     break;
@@ -164,9 +195,10 @@ int main(){
             case STOP:
                 if (between_floors != ATFLOOR) {
                     driving_direction = HARDWARE_MOVEMENT_STOP;
+                    stopped_between = 1;
                 }
-
-                nfn_clear_queue();
+                
+                ordermanager_clear_queue();
                 hardware_command_stop_light(1);
                 timer = start_timer();
                 hardware_command_movement(HARDWARE_MOVEMENT_STOP);
