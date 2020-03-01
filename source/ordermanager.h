@@ -14,7 +14,6 @@
 #define ATFLOOR 0
 #define NO_ORDER_FOUND 0
 
-
 /**
  * @brief checks if the current floor contains an order.
  * @param[in]   current_floor The last registered floor of the elevator.
@@ -30,8 +29,7 @@ int ordermanager_at_ordered_floor(int current_floor, int order_above, int betwee
  * @param[in]   current_floor The last registered floor of the elevator.
  * @return 1 if the @p queue is empty below @p current_floor, 0 otherwise.
  */
-int ordermanager_queue_is_empty_below(int* queue, int current_floor);
-
+int ordermanager_queue_is_empty_below(int *queue, int current_floor);
 
 /**
  * @brief Checks if the queue is empty above @p current_floor .
@@ -39,7 +37,7 @@ int ordermanager_queue_is_empty_below(int* queue, int current_floor);
  * @param[in]   current_floor The last registered floor of the elevator.
  * @return 1 if the @p queue is empty above @p current_floor , 0 otherwise.
  */
-int ordermanager_queue_is_empty_above(int* queue, int current_floor);
+int ordermanager_queue_is_empty_above(int *queue, int current_floor);
 
 /** 
  * @brief Polls all the floor sensors and puts them in the queue. Also turns on the order lights.
@@ -51,7 +49,7 @@ void ordermanager_poll_order_sensors();
  * @param[in]   floor floor to be added to queue
  * @param[in]   order_type order type to be added to queue
  */
-void ordermanager_add_orders(int floor, HardwareOrder order_type);
+void ordermanager_add_order(int floor, HardwareOrder order_type);
 
 /**
  * @brief Checks if there are orders above or below the current floor.
@@ -60,7 +58,6 @@ void ordermanager_add_orders(int floor, HardwareOrder order_type);
  * @return 1 if next order is above, -1 if next order is below, 0 if there are no orders.
  */
 int ordermanager_order_above_or_below(int current_floor, int between_floors, HardwareMovement driving_direction);
-
 
 /**
  * @brief Sets all of the queue's entries to 0. Also turns all the order lights off.
@@ -79,6 +76,6 @@ void ordermanager_remove_order(int floor, HardwareMovement driving_direction);
  * @param[in]   queue The queue we are checking.
  * @return 1 if empty, 0 otherwise.
  */
-int ordermanager_queue_is_empty(int* queue);
+int ordermanager_queue_is_empty(int *queue);
 
 #endif

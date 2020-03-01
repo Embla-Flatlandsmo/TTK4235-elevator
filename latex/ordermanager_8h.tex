@@ -40,7 +40,7 @@ int \hyperlink{ordermanager_8h_a9bbda03134c052f807c4260c5b72d5e6}{ordermanager\+
 \mbox{\Hypertarget{ordermanager_8h_afee2dada0440ec8dd5dfc3dfd0a55e21}\label{ordermanager_8h_afee2dada0440ec8dd5dfc3dfd0a55e21}} 
 void \hyperlink{ordermanager_8h_afee2dada0440ec8dd5dfc3dfd0a55e21}{ordermanager\+\_\+poll\+\_\+order\+\_\+sensors} ()
 \begin{DoxyCompactList}\small\item\em Polls all the floor sensors and puts them in the queue. Also turns on the order lights. \end{DoxyCompactList}\item 
-void \hyperlink{ordermanager_8h_a172d4bb314f837215f77f580a8a7fbb5}{ordermanager\+\_\+add\+\_\+orders} (int floor, \hyperlink{hardware_8h_a796a8de8ce0ae769d7dbd3327a7bdbe7}{Hardware\+Order} order\+\_\+type)
+void \hyperlink{ordermanager_8h_a7f84f410a3ae6aaf96b9bf2d5b83aa04}{ordermanager\+\_\+add\+\_\+order} (int floor, \hyperlink{hardware_8h_a796a8de8ce0ae769d7dbd3327a7bdbe7}{Hardware\+Order} order\+\_\+type)
 \begin{DoxyCompactList}\small\item\em Adds order to the queue. Used in ordermanager\+\_\+poll\+\_\+order\+\_\+sensors. \end{DoxyCompactList}\item 
 int \hyperlink{ordermanager_8h_a1ac5420fa14000ed2b12b88dfa11f985}{ordermanager\+\_\+order\+\_\+above\+\_\+or\+\_\+below} (int \hyperlink{main_8c_a53f0cf8d6c7426344a7336af4b06925a}{current\+\_\+floor}, int \hyperlink{main_8c_a0d38da447588f7234ad833be0b003306}{between\+\_\+floors}, \hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement} driving\+\_\+direction)
 \begin{DoxyCompactList}\small\item\em Checks if there are orders above or below the current floor. \end{DoxyCompactList}\item 
@@ -59,11 +59,11 @@ Module for managing orders, determining where to go and determining where to sto
 
 
 \subsection{Function Documentation}
-\mbox{\Hypertarget{ordermanager_8h_a172d4bb314f837215f77f580a8a7fbb5}\label{ordermanager_8h_a172d4bb314f837215f77f580a8a7fbb5}} 
-\index{ordermanager.\+h@{ordermanager.\+h}!ordermanager\+\_\+add\+\_\+orders@{ordermanager\+\_\+add\+\_\+orders}}
-\index{ordermanager\+\_\+add\+\_\+orders@{ordermanager\+\_\+add\+\_\+orders}!ordermanager.\+h@{ordermanager.\+h}}
-\subsubsection{\texorpdfstring{ordermanager\+\_\+add\+\_\+orders()}{ordermanager\_add\_orders()}}
-{\footnotesize\ttfamily void ordermanager\+\_\+add\+\_\+orders (\begin{DoxyParamCaption}\item[{int}]{floor,  }\item[{\hyperlink{hardware_8h_a796a8de8ce0ae769d7dbd3327a7bdbe7}{Hardware\+Order}}]{order\+\_\+type }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{ordermanager_8h_a7f84f410a3ae6aaf96b9bf2d5b83aa04}\label{ordermanager_8h_a7f84f410a3ae6aaf96b9bf2d5b83aa04}} 
+\index{ordermanager.\+h@{ordermanager.\+h}!ordermanager\+\_\+add\+\_\+order@{ordermanager\+\_\+add\+\_\+order}}
+\index{ordermanager\+\_\+add\+\_\+order@{ordermanager\+\_\+add\+\_\+order}!ordermanager.\+h@{ordermanager.\+h}}
+\subsubsection{\texorpdfstring{ordermanager\+\_\+add\+\_\+order()}{ordermanager\_add\_order()}}
+{\footnotesize\ttfamily void ordermanager\+\_\+add\+\_\+order (\begin{DoxyParamCaption}\item[{int}]{floor,  }\item[{\hyperlink{hardware_8h_a796a8de8ce0ae769d7dbd3327a7bdbe7}{Hardware\+Order}}]{order\+\_\+type }\end{DoxyParamCaption})}
 
 
 
@@ -76,6 +76,10 @@ Adds order to the queue. Used in ordermanager\+\_\+poll\+\_\+order\+\_\+sensors.
 \mbox{\tt in}  & {\em order\+\_\+type} & order type to be added to queue \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 84 of file ordermanager.\+c.
+
 \mbox{\Hypertarget{ordermanager_8h_a460e33a6e957b2862103c51de9b92354}\label{ordermanager_8h_a460e33a6e957b2862103c51de9b92354}} 
 \index{ordermanager.\+h@{ordermanager.\+h}!ordermanager\+\_\+at\+\_\+ordered\+\_\+floor@{ordermanager\+\_\+at\+\_\+ordered\+\_\+floor}}
 \index{ordermanager\+\_\+at\+\_\+ordered\+\_\+floor@{ordermanager\+\_\+at\+\_\+ordered\+\_\+floor}!ordermanager.\+h@{ordermanager.\+h}}

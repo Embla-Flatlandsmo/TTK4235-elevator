@@ -2,7 +2,7 @@ var searchData=
 [
   ['order_5fabove',['order_above',['../main_8c.html#a0d8675459cb6e82c10194cc12b8ce846',1,'main.c']]],
   ['ordermanager_2eh',['ordermanager.h',['../ordermanager_8h.html',1,'']]],
-  ['ordermanager_5fadd_5forders',['ordermanager_add_orders',['../ordermanager_8h.html#a172d4bb314f837215f77f580a8a7fbb5',1,'ordermanager.h']]],
+  ['ordermanager_5fadd_5forder',['ordermanager_add_order',['../ordermanager_8h.html#a7f84f410a3ae6aaf96b9bf2d5b83aa04',1,'ordermanager.c']]],
   ['ordermanager_5fat_5fordered_5ffloor',['ordermanager_at_ordered_floor',['../ordermanager_8h.html#a460e33a6e957b2862103c51de9b92354',1,'ordermanager.c']]],
   ['ordermanager_5fclear_5fqueues',['ordermanager_clear_queues',['../ordermanager_8h.html#a09cfc228b31fb377266c34bc7d2615fd',1,'ordermanager.c']]],
   ['ordermanager_5forder_5fabove_5for_5fbelow',['ordermanager_order_above_or_below',['../ordermanager_8h.html#a1ac5420fa14000ed2b12b88dfa11f985',1,'ordermanager.c']]],

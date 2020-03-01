@@ -121,9 +121,9 @@ Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#afee2dada0440ec8dd5dfc3dfd0a55e21">ordermanager_poll_order_sensors</a> ()</td></tr>
 <tr class="memdesc:afee2dada0440ec8dd5dfc3dfd0a55e21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Polls all the floor sensors and puts them in the queue. Also turns on the order lights. <br /></td></tr>
 <tr class="separator:afee2dada0440ec8dd5dfc3dfd0a55e21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a172d4bb314f837215f77f580a8a7fbb5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#a172d4bb314f837215f77f580a8a7fbb5">ordermanager_add_orders</a> (int floor, <a class="el" href="hardware_8h.html#a796a8de8ce0ae769d7dbd3327a7bdbe7">HardwareOrder</a> order_type)</td></tr>
-<tr class="memdesc:a172d4bb314f837215f77f580a8a7fbb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds order to the queue. Used in ordermanager_poll_order_sensors.  <a href="#a172d4bb314f837215f77f580a8a7fbb5">More...</a><br /></td></tr>
-<tr class="separator:a172d4bb314f837215f77f580a8a7fbb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f84f410a3ae6aaf96b9bf2d5b83aa04"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#a7f84f410a3ae6aaf96b9bf2d5b83aa04">ordermanager_add_order</a> (int floor, <a class="el" href="hardware_8h.html#a796a8de8ce0ae769d7dbd3327a7bdbe7">HardwareOrder</a> order_type)</td></tr>
+<tr class="memdesc:a7f84f410a3ae6aaf96b9bf2d5b83aa04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds order to the queue. Used in ordermanager_poll_order_sensors.  <a href="#a7f84f410a3ae6aaf96b9bf2d5b83aa04">More...</a><br /></td></tr>
+<tr class="separator:a7f84f410a3ae6aaf96b9bf2d5b83aa04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ac5420fa14000ed2b12b88dfa11f985"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#a1ac5420fa14000ed2b12b88dfa11f985">ordermanager_order_above_or_below</a> (int <a class="el" href="main_8c.html#a53f0cf8d6c7426344a7336af4b06925a">current_floor</a>, int <a class="el" href="main_8c.html#a0d38da447588f7234ad833be0b003306">between_floors</a>, <a class="el" href="hardware_8h.html#a2167c399a24df296afc432bcb88228af">HardwareMovement</a> driving_direction)</td></tr>
 <tr class="memdesc:a1ac5420fa14000ed2b12b88dfa11f985"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if there are orders above or below the current floor.  <a href="#a1ac5420fa14000ed2b12b88dfa11f985">More...</a><br /></td></tr>
 <tr class="separator:a1ac5420fa14000ed2b12b88dfa11f985"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,14 +143,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orde
 
 <p class="definition">Definition in file <a class="el" href="ordermanager_8h_source.html">ordermanager.h</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a172d4bb314f837215f77f580a8a7fbb5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a172d4bb314f837215f77f580a8a7fbb5">&#9670;&nbsp;</a></span>ordermanager_add_orders()</h2>
+<a id="a7f84f410a3ae6aaf96b9bf2d5b83aa04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f84f410a3ae6aaf96b9bf2d5b83aa04">&#9670;&nbsp;</a></span>ordermanager_add_order()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ordermanager_add_orders </td>
+          <td class="memname">void ordermanager_add_order </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>floor</em>, </td>
@@ -177,6 +177,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orde
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="ordermanager_8c_source.html#l00084">84</a> of file <a class="el" href="ordermanager_8c_source.html">ordermanager.c</a>.</p>
 
 </div>
 </div>
