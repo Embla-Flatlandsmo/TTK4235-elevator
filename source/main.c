@@ -221,11 +221,7 @@ int main()
             break;
 
         case STOP:
-            if (between_floors != ATFLOOR)
-            {
-                driving_direction = HARDWARE_MOVEMENT_STOP;
-                stopped_between = 1;
-            }
+
             ordermanager_clear_queues();
             hardware_command_stop_light(1);
             timer = start_timer();
