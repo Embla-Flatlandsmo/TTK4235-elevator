@@ -17,11 +17,29 @@
 
 /**
  * @brief checks if the current floor contains an order.
- * @param[in] current_floor current floor.
- * @param[in] driving_direction 
+ * @param[in]   current_floor The last registered floor of the elevator.
+ * @param[in]   order_above Tells us if we have an order above, below or no order.
+ * @param[in]   between_floors Parameter for knowing if we are below, above or at @p current_floor.
  * @return 1 if we are at a floor with an order, 0 otherwise.
 */
-int int ordermanager_at_ordered_floor(int current_floor, HardwareMovement driving_direction);
+int ordermanager_at_ordered_floor(int current_floor, int order_above, int between_floors);
+
+/**
+ * @brief Checks if the queue is empty below @p current_floor.
+ * @param[in]   queue The queue we are checking.
+ * @param[in]   current_floor The last registered floor of the elevator.
+ * @return 1 if the @p queue is empty below @p current_floor, 0 otherwise.
+ */
+int ordermanager_queue_is_empty_below(int* queue, int current_floor);
+
+
+/**
+ * @brief Checks if the queue is empty above @p current_floor .
+ * @param[in]   queue The queue we are checking.
+ * @param[in]   current_floor The last registered floor of the elevator.
+ * @return 1 if the @p queue is empty above @p current_floor , 0 otherwise.
+ */
+int ordermanager_queue_is_empty_above(int* queue, int current_floor);
 
 /** 
  * @brief Polls all the floor sensors and puts them in the queue. Also turns on the order lights.
@@ -45,19 +63,20 @@ int ordermanager_order_above_or_below(int current_floor, int between_floors, Har
 
 
 /**
- * @brief sets all of the queue's entries to 0. Also turns all the order lights off.
+ * @brief Sets all of the queue's entries to 0. Also turns all the order lights off.
  */
 void ordermanager_clear_queues();
 
 /**
- * @brief Removes an order from the queue
+ * @brief Removes an order from the queue in the @p driving_direction .
  * @param[in] floor Floor to be removed
- * @param[in] driving_direction Elevator's driving direction.
+ * @param[in] driving_direction Up or down. Elevator's driving direction.
  */
 void ordermanager_remove_order(int floor, HardwareMovement driving_direction);
 
 /**
- * @brief Checks if the queue is empty.
+ * @brief Checks if the @p queue is empty.
+ * @param[in]   queue The queue we are checking.
  * @return 1 if empty, 0 otherwise.
  */
 int ordermanager_queue_is_empty(int* queue);

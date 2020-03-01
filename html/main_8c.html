@@ -123,9 +123,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ae6abbf09322587b54b161dbad87c5459"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ae6abbf09322587b54b161dbad87c5459">timer_expired</a> (time_t startTime)</td></tr>
 <tr class="memdesc:ae6abbf09322587b54b161dbad87c5459"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking if the timer has expired.  <a href="#ae6abbf09322587b54b161dbad87c5459">More...</a><br /></td></tr>
 <tr class="separator:ae6abbf09322587b54b161dbad87c5459"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a887ea3f667e94b6bdedbd6c969eaf215"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a887ea3f667e94b6bdedbd6c969eaf215">poll_floor_indicator</a> (int *<a class="el" href="main_8c.html#a53f0cf8d6c7426344a7336af4b06925a">current_floor</a>, int *<a class="el" href="main_8c.html#a0d38da447588f7234ad833be0b003306">between_floors</a>, <a class="el" href="hardware_8h.html#a2167c399a24df296afc432bcb88228af">HardwareMovement</a> driving_direction, int *<a class="el" href="main_8c.html#a913a15652cd2379397df0a3f1ec546d7">stopped_between</a>)</td></tr>
-<tr class="memdesc:a887ea3f667e94b6bdedbd6c969eaf215"><td class="mdescLeft">&#160;</td><td class="mdescRight">Polls all the floor indicators and updates the.  <a href="#a887ea3f667e94b6bdedbd6c969eaf215">More...</a><br /></td></tr>
-<tr class="separator:a887ea3f667e94b6bdedbd6c969eaf215"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79645cc2340c6bba30ca15efe595899a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a79645cc2340c6bba30ca15efe595899a">poll_floor_indicators</a> (int *<a class="el" href="main_8c.html#a53f0cf8d6c7426344a7336af4b06925a">current_floor</a>, int *<a class="el" href="main_8c.html#a0d38da447588f7234ad833be0b003306">between_floors</a>, <a class="el" href="hardware_8h.html#a2167c399a24df296afc432bcb88228af">HardwareMovement</a> driving_direction, int *<a class="el" href="main_8c.html#a913a15652cd2379397df0a3f1ec546d7">stopped_between</a>)</td></tr>
+<tr class="memdesc:a79645cc2340c6bba30ca15efe595899a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Polls all the floor indicators and updates the.  <a href="#a79645cc2340c6bba30ca15efe595899a">More...</a><br /></td></tr>
+<tr class="separator:a79645cc2340c6bba30ca15efe595899a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed429b7c618757d735b6bea2609c229a"><td class="memItemLeft" align="right" valign="top"><a id="aed429b7c618757d735b6bea2609c229a"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aed429b7c618757d735b6bea2609c229a">sigint_handler</a> (int sig)</td></tr>
 <tr class="memdesc:aed429b7c618757d735b6bea2609c229a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling interrupts, results in program termination. <br /></td></tr>
@@ -172,14 +172,14 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
 
 <p class="definition">Definition in file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a887ea3f667e94b6bdedbd6c969eaf215"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a887ea3f667e94b6bdedbd6c969eaf215">&#9670;&nbsp;</a></span>poll_floor_indicator()</h2>
+<a id="a79645cc2340c6bba30ca15efe595899a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79645cc2340c6bba30ca15efe595899a">&#9670;&nbsp;</a></span>poll_floor_indicators()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void poll_floor_indicator </td>
+          <td class="memname">void poll_floor_indicators </td>
           <td>(</td>
           <td class="paramtype">int *&#160;</td>
           <td class="paramname"><em>current_floor</em>, </td>
@@ -221,7 +221,7 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00058">58</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00057">57</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -243,7 +243,7 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
 <p>Function for starting the timer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Starting time. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00035">35</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00034">34</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -272,7 +272,7 @@ static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if 3 seconds have passed since <code>startTime</code>, 0 otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00044">44</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00043">43</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>

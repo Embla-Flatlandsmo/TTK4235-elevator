@@ -31,8 +31,12 @@ This graph shows which files directly or indirectly include this file\+:
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \hyperlink{ordermanager_8h_a64d250f3410bbbed5aed91fc0f1e7c4c}{ordermanager\+\_\+at\+\_\+ordered\+\_\+floor} (int \hyperlink{main_8c_a53f0cf8d6c7426344a7336af4b06925a}{current\+\_\+floor})
+int \hyperlink{ordermanager_8h_a460e33a6e957b2862103c51de9b92354}{ordermanager\+\_\+at\+\_\+ordered\+\_\+floor} (int \hyperlink{main_8c_a53f0cf8d6c7426344a7336af4b06925a}{current\+\_\+floor}, int \hyperlink{main_8c_a0d8675459cb6e82c10194cc12b8ce846}{order\+\_\+above}, int \hyperlink{main_8c_a0d38da447588f7234ad833be0b003306}{between\+\_\+floors})
 \begin{DoxyCompactList}\small\item\em checks if the current floor contains an order. \end{DoxyCompactList}\item 
+int \hyperlink{ordermanager_8h_a09b8b707e6c2e146390ec6b6306e7480}{ordermanager\+\_\+queue\+\_\+is\+\_\+empty\+\_\+below} (int $\ast$queue, int \hyperlink{main_8c_a53f0cf8d6c7426344a7336af4b06925a}{current\+\_\+floor})
+\begin{DoxyCompactList}\small\item\em Checks if the queue is empty below {\ttfamily current\+\_\+floor}. \end{DoxyCompactList}\item 
+int \hyperlink{ordermanager_8h_a9bbda03134c052f807c4260c5b72d5e6}{ordermanager\+\_\+queue\+\_\+is\+\_\+empty\+\_\+above} (int $\ast$queue, int \hyperlink{main_8c_a53f0cf8d6c7426344a7336af4b06925a}{current\+\_\+floor})
+\begin{DoxyCompactList}\small\item\em Checks if the queue is empty above {\ttfamily current\+\_\+floor} . \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{ordermanager_8h_afee2dada0440ec8dd5dfc3dfd0a55e21}\label{ordermanager_8h_afee2dada0440ec8dd5dfc3dfd0a55e21}} 
 void \hyperlink{ordermanager_8h_afee2dada0440ec8dd5dfc3dfd0a55e21}{ordermanager\+\_\+poll\+\_\+order\+\_\+sensors} ()
 \begin{DoxyCompactList}\small\item\em Polls all the floor sensors and puts them in the queue. Also turns on the order lights. \end{DoxyCompactList}\item 
@@ -40,13 +44,13 @@ void \hyperlink{ordermanager_8h_a172d4bb314f837215f77f580a8a7fbb5}{ordermanager\
 \begin{DoxyCompactList}\small\item\em Adds order to the queue. Used in ordermanager\+\_\+poll\+\_\+order\+\_\+sensors. \end{DoxyCompactList}\item 
 int \hyperlink{ordermanager_8h_a1ac5420fa14000ed2b12b88dfa11f985}{ordermanager\+\_\+order\+\_\+above\+\_\+or\+\_\+below} (int \hyperlink{main_8c_a53f0cf8d6c7426344a7336af4b06925a}{current\+\_\+floor}, int \hyperlink{main_8c_a0d38da447588f7234ad833be0b003306}{between\+\_\+floors}, \hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement} driving\+\_\+direction)
 \begin{DoxyCompactList}\small\item\em Checks if there are orders above or below the current floor. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{ordermanager_8h_ad42c02ab4e2e8f482043e622be2bc16c}\label{ordermanager_8h_ad42c02ab4e2e8f482043e622be2bc16c}} 
-void \hyperlink{ordermanager_8h_ad42c02ab4e2e8f482043e622be2bc16c}{ordermanager\+\_\+clear\+\_\+queue} ()
-\begin{DoxyCompactList}\small\item\em sets all of the queue\textquotesingle{}s entries to 0. Also turns all the order lights off. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{ordermanager_8h_a09cfc228b31fb377266c34bc7d2615fd}\label{ordermanager_8h_a09cfc228b31fb377266c34bc7d2615fd}} 
+void \hyperlink{ordermanager_8h_a09cfc228b31fb377266c34bc7d2615fd}{ordermanager\+\_\+clear\+\_\+queues} ()
+\begin{DoxyCompactList}\small\item\em Sets all of the queue\textquotesingle{}s entries to 0. Also turns all the order lights off. \end{DoxyCompactList}\item 
 void \hyperlink{ordermanager_8h_ae97f50a02cdaad404363cb043c77c1d5}{ordermanager\+\_\+remove\+\_\+order} (int floor, \hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement} driving\+\_\+direction)
-\begin{DoxyCompactList}\small\item\em Removes an order from the queue. \end{DoxyCompactList}\item 
-int \hyperlink{ordermanager_8h_a940b9a025d01b330d9cc804747318b20}{ordermanager\+\_\+queue\+\_\+is\+\_\+empty} ()
-\begin{DoxyCompactList}\small\item\em Checks if the queue is empty. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Removes an order from the queue in the {\ttfamily driving\+\_\+direction} . \end{DoxyCompactList}\item 
+int \hyperlink{ordermanager_8h_a71b71f86a2855128abc62620beba7cd7}{ordermanager\+\_\+queue\+\_\+is\+\_\+empty} (int $\ast$queue)
+\begin{DoxyCompactList}\small\item\em Checks if the {\ttfamily queue} is empty. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -72,11 +76,11 @@ Adds order to the queue. Used in ordermanager\+\_\+poll\+\_\+order\+\_\+sensors.
 \mbox{\tt in}  & {\em order\+\_\+type} & order type to be added to queue \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{ordermanager_8h_a64d250f3410bbbed5aed91fc0f1e7c4c}\label{ordermanager_8h_a64d250f3410bbbed5aed91fc0f1e7c4c}} 
+\mbox{\Hypertarget{ordermanager_8h_a460e33a6e957b2862103c51de9b92354}\label{ordermanager_8h_a460e33a6e957b2862103c51de9b92354}} 
 \index{ordermanager.\+h@{ordermanager.\+h}!ordermanager\+\_\+at\+\_\+ordered\+\_\+floor@{ordermanager\+\_\+at\+\_\+ordered\+\_\+floor}}
 \index{ordermanager\+\_\+at\+\_\+ordered\+\_\+floor@{ordermanager\+\_\+at\+\_\+ordered\+\_\+floor}!ordermanager.\+h@{ordermanager.\+h}}
 \subsubsection{\texorpdfstring{ordermanager\+\_\+at\+\_\+ordered\+\_\+floor()}{ordermanager\_at\_ordered\_floor()}}
-{\footnotesize\ttfamily int ordermanager\+\_\+at\+\_\+ordered\+\_\+floor (\begin{DoxyParamCaption}\item[{int}]{current\+\_\+floor }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int ordermanager\+\_\+at\+\_\+ordered\+\_\+floor (\begin{DoxyParamCaption}\item[{int}]{current\+\_\+floor,  }\item[{int}]{order\+\_\+above,  }\item[{int}]{between\+\_\+floors }\end{DoxyParamCaption})}
 
 
 
@@ -84,7 +88,11 @@ checks if the current floor contains an order.
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em current\+\_\+floor} & current floor. \\
+\mbox{\tt in}  & {\em current\+\_\+floor} & The last registered floor of the elevator. \\
+\hline
+\mbox{\tt in}  & {\em order\+\_\+above} & Tells us if we have an order above, below or no order. \\
+\hline
+\mbox{\tt in}  & {\em between\+\_\+floors} & Parameter for knowing if we are below, above or at {\ttfamily current\+\_\+floor}. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -92,7 +100,7 @@ checks if the current floor contains an order.
 \end{DoxyReturn}
 
 
-Definition at line 17 of file ordermanager.\+c.
+Definition at line 34 of file ordermanager.\+c.
 
 \mbox{\Hypertarget{ordermanager_8h_a1ac5420fa14000ed2b12b88dfa11f985}\label{ordermanager_8h_a1ac5420fa14000ed2b12b88dfa11f985}} 
 \index{ordermanager.\+h@{ordermanager.\+h}!ordermanager\+\_\+order\+\_\+above\+\_\+or\+\_\+below@{ordermanager\+\_\+order\+\_\+above\+\_\+or\+\_\+below}}
@@ -116,24 +124,77 @@ Checks if there are orders above or below the current floor.
 \end{DoxyReturn}
 
 
-Definition at line 61 of file ordermanager.\+c.
+Definition at line 123 of file ordermanager.\+c.
 
-\mbox{\Hypertarget{ordermanager_8h_a940b9a025d01b330d9cc804747318b20}\label{ordermanager_8h_a940b9a025d01b330d9cc804747318b20}} 
+\mbox{\Hypertarget{ordermanager_8h_a71b71f86a2855128abc62620beba7cd7}\label{ordermanager_8h_a71b71f86a2855128abc62620beba7cd7}} 
 \index{ordermanager.\+h@{ordermanager.\+h}!ordermanager\+\_\+queue\+\_\+is\+\_\+empty@{ordermanager\+\_\+queue\+\_\+is\+\_\+empty}}
 \index{ordermanager\+\_\+queue\+\_\+is\+\_\+empty@{ordermanager\+\_\+queue\+\_\+is\+\_\+empty}!ordermanager.\+h@{ordermanager.\+h}}
 \subsubsection{\texorpdfstring{ordermanager\+\_\+queue\+\_\+is\+\_\+empty()}{ordermanager\_queue\_is\_empty()}}
-{\footnotesize\ttfamily int ordermanager\+\_\+queue\+\_\+is\+\_\+empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int ordermanager\+\_\+queue\+\_\+is\+\_\+empty (\begin{DoxyParamCaption}\item[{int $\ast$}]{queue }\end{DoxyParamCaption})}
 
 
 
-Checks if the queue is empty. 
+Checks if the {\ttfamily queue} is empty. 
 
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em queue} & The queue we are checking. \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 1 if empty, 0 otherwise. 
 \end{DoxyReturn}
 
 
 Definition at line 8 of file ordermanager.\+c.
+
+\mbox{\Hypertarget{ordermanager_8h_a9bbda03134c052f807c4260c5b72d5e6}\label{ordermanager_8h_a9bbda03134c052f807c4260c5b72d5e6}} 
+\index{ordermanager.\+h@{ordermanager.\+h}!ordermanager\+\_\+queue\+\_\+is\+\_\+empty\+\_\+above@{ordermanager\+\_\+queue\+\_\+is\+\_\+empty\+\_\+above}}
+\index{ordermanager\+\_\+queue\+\_\+is\+\_\+empty\+\_\+above@{ordermanager\+\_\+queue\+\_\+is\+\_\+empty\+\_\+above}!ordermanager.\+h@{ordermanager.\+h}}
+\subsubsection{\texorpdfstring{ordermanager\+\_\+queue\+\_\+is\+\_\+empty\+\_\+above()}{ordermanager\_queue\_is\_empty\_above()}}
+{\footnotesize\ttfamily int ordermanager\+\_\+queue\+\_\+is\+\_\+empty\+\_\+above (\begin{DoxyParamCaption}\item[{int $\ast$}]{queue,  }\item[{int}]{current\+\_\+floor }\end{DoxyParamCaption})}
+
+
+
+Checks if the queue is empty above {\ttfamily current\+\_\+floor} . 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em queue} & The queue we are checking. \\
+\hline
+\mbox{\tt in}  & {\em current\+\_\+floor} & The last registered floor of the elevator. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if the {\ttfamily queue} is empty above {\ttfamily current\+\_\+floor} , 0 otherwise. 
+\end{DoxyReturn}
+
+
+Definition at line 17 of file ordermanager.\+c.
+
+\mbox{\Hypertarget{ordermanager_8h_a09b8b707e6c2e146390ec6b6306e7480}\label{ordermanager_8h_a09b8b707e6c2e146390ec6b6306e7480}} 
+\index{ordermanager.\+h@{ordermanager.\+h}!ordermanager\+\_\+queue\+\_\+is\+\_\+empty\+\_\+below@{ordermanager\+\_\+queue\+\_\+is\+\_\+empty\+\_\+below}}
+\index{ordermanager\+\_\+queue\+\_\+is\+\_\+empty\+\_\+below@{ordermanager\+\_\+queue\+\_\+is\+\_\+empty\+\_\+below}!ordermanager.\+h@{ordermanager.\+h}}
+\subsubsection{\texorpdfstring{ordermanager\+\_\+queue\+\_\+is\+\_\+empty\+\_\+below()}{ordermanager\_queue\_is\_empty\_below()}}
+{\footnotesize\ttfamily int ordermanager\+\_\+queue\+\_\+is\+\_\+empty\+\_\+below (\begin{DoxyParamCaption}\item[{int $\ast$}]{queue,  }\item[{int}]{current\+\_\+floor }\end{DoxyParamCaption})}
+
+
+
+Checks if the queue is empty below {\ttfamily current\+\_\+floor}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em queue} & The queue we are checking. \\
+\hline
+\mbox{\tt in}  & {\em current\+\_\+floor} & The last registered floor of the elevator. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if the {\ttfamily queue} is empty below {\ttfamily current\+\_\+floor}, 0 otherwise. 
+\end{DoxyReturn}
+
+
+Definition at line 26 of file ordermanager.\+c.
 
 \mbox{\Hypertarget{ordermanager_8h_ae97f50a02cdaad404363cb043c77c1d5}\label{ordermanager_8h_ae97f50a02cdaad404363cb043c77c1d5}} 
 \index{ordermanager.\+h@{ordermanager.\+h}!ordermanager\+\_\+remove\+\_\+order@{ordermanager\+\_\+remove\+\_\+order}}
@@ -143,16 +204,16 @@ Definition at line 8 of file ordermanager.\+c.
 
 
 
-Removes an order from the queue. 
+Removes an order from the queue in the {\ttfamily driving\+\_\+direction} . 
 
 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in}  & {\em floor} & Floor to be removed \\
 \hline
-\mbox{\tt in}  & {\em driving\+\_\+direction} & Elevator\textquotesingle{}s driving direction. \\
+\mbox{\tt in}  & {\em driving\+\_\+direction} & Up or down. Elevator\textquotesingle{}s driving direction. \\
 \hline
 \end{DoxyParams}
 
 
-Definition at line 114 of file ordermanager.\+c.
+Definition at line 175 of file ordermanager.\+c.
 

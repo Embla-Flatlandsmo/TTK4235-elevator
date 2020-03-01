@@ -45,7 +45,7 @@ time\+\_\+t \hyperlink{main_8c_a8f53cb31f6d9093feaa897c095057e3d}{start\+\_\+tim
 \begin{DoxyCompactList}\small\item\em Function for starting the timer. \end{DoxyCompactList}\item 
 int \hyperlink{main_8c_ae6abbf09322587b54b161dbad87c5459}{timer\+\_\+expired} (time\+\_\+t start\+Time)
 \begin{DoxyCompactList}\small\item\em Function for checking if the timer has expired. \end{DoxyCompactList}\item 
-void \hyperlink{main_8c_a887ea3f667e94b6bdedbd6c969eaf215}{poll\+\_\+floor\+\_\+indicator} (int $\ast$\hyperlink{main_8c_a53f0cf8d6c7426344a7336af4b06925a}{current\+\_\+floor}, int $\ast$\hyperlink{main_8c_a0d38da447588f7234ad833be0b003306}{between\+\_\+floors}, \hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement} driving\+\_\+direction, int $\ast$\hyperlink{main_8c_a913a15652cd2379397df0a3f1ec546d7}{stopped\+\_\+between})
+void \hyperlink{main_8c_a79645cc2340c6bba30ca15efe595899a}{poll\+\_\+floor\+\_\+indicators} (int $\ast$\hyperlink{main_8c_a53f0cf8d6c7426344a7336af4b06925a}{current\+\_\+floor}, int $\ast$\hyperlink{main_8c_a0d38da447588f7234ad833be0b003306}{between\+\_\+floors}, \hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement} driving\+\_\+direction, int $\ast$\hyperlink{main_8c_a913a15652cd2379397df0a3f1ec546d7}{stopped\+\_\+between})
 \begin{DoxyCompactList}\small\item\em Polls all the floor indicators and updates the. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{main_8c_aed429b7c618757d735b6bea2609c229a}\label{main_8c_aed429b7c618757d735b6bea2609c229a}} 
 static void \hyperlink{main_8c_aed429b7c618757d735b6bea2609c229a}{sigint\+\_\+handler} (int sig)
@@ -88,11 +88,11 @@ File containing the state machine for the elevator.
 
 
 \subsection{Function Documentation}
-\mbox{\Hypertarget{main_8c_a887ea3f667e94b6bdedbd6c969eaf215}\label{main_8c_a887ea3f667e94b6bdedbd6c969eaf215}} 
-\index{main.\+c@{main.\+c}!poll\+\_\+floor\+\_\+indicator@{poll\+\_\+floor\+\_\+indicator}}
-\index{poll\+\_\+floor\+\_\+indicator@{poll\+\_\+floor\+\_\+indicator}!main.\+c@{main.\+c}}
-\subsubsection{\texorpdfstring{poll\+\_\+floor\+\_\+indicator()}{poll\_floor\_indicator()}}
-{\footnotesize\ttfamily void poll\+\_\+floor\+\_\+indicator (\begin{DoxyParamCaption}\item[{int $\ast$}]{current\+\_\+floor,  }\item[{int $\ast$}]{between\+\_\+floors,  }\item[{\hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement}}]{driving\+\_\+direction,  }\item[{int $\ast$}]{stopped\+\_\+between }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{main_8c_a79645cc2340c6bba30ca15efe595899a}\label{main_8c_a79645cc2340c6bba30ca15efe595899a}} 
+\index{main.\+c@{main.\+c}!poll\+\_\+floor\+\_\+indicators@{poll\+\_\+floor\+\_\+indicators}}
+\index{poll\+\_\+floor\+\_\+indicators@{poll\+\_\+floor\+\_\+indicators}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{poll\+\_\+floor\+\_\+indicators()}{poll\_floor\_indicators()}}
+{\footnotesize\ttfamily void poll\+\_\+floor\+\_\+indicators (\begin{DoxyParamCaption}\item[{int $\ast$}]{current\+\_\+floor,  }\item[{int $\ast$}]{between\+\_\+floors,  }\item[{\hyperlink{hardware_8h_a2167c399a24df296afc432bcb88228af}{Hardware\+Movement}}]{driving\+\_\+direction,  }\item[{int $\ast$}]{stopped\+\_\+between }\end{DoxyParamCaption})}
 
 
 
@@ -111,7 +111,7 @@ Polls all the floor indicators and updates the.
 \end{DoxyParams}
 
 
-Definition at line 58 of file main.\+c.
+Definition at line 57 of file main.\+c.
 
 \mbox{\Hypertarget{main_8c_a8f53cb31f6d9093feaa897c095057e3d}\label{main_8c_a8f53cb31f6d9093feaa897c095057e3d}} 
 \index{main.\+c@{main.\+c}!start\+\_\+timer@{start\+\_\+timer}}
@@ -128,7 +128,7 @@ Starting time.
 \end{DoxyReturn}
 
 
-Definition at line 35 of file main.\+c.
+Definition at line 34 of file main.\+c.
 
 \mbox{\Hypertarget{main_8c_ae6abbf09322587b54b161dbad87c5459}\label{main_8c_ae6abbf09322587b54b161dbad87c5459}} 
 \index{main.\+c@{main.\+c}!timer\+\_\+expired@{timer\+\_\+expired}}
@@ -150,5 +150,5 @@ Function for checking if the timer has expired.
 \end{DoxyReturn}
 
 
-Definition at line 44 of file main.\+c.
+Definition at line 43 of file main.\+c.
 

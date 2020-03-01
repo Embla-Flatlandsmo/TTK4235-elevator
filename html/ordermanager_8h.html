@@ -108,9 +108,15 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a64d250f3410bbbed5aed91fc0f1e7c4c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#a64d250f3410bbbed5aed91fc0f1e7c4c">ordermanager_at_ordered_floor</a> (int <a class="el" href="main_8c.html#a53f0cf8d6c7426344a7336af4b06925a">current_floor</a>)</td></tr>
-<tr class="memdesc:a64d250f3410bbbed5aed91fc0f1e7c4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">checks if the current floor contains an order.  <a href="#a64d250f3410bbbed5aed91fc0f1e7c4c">More...</a><br /></td></tr>
-<tr class="separator:a64d250f3410bbbed5aed91fc0f1e7c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a460e33a6e957b2862103c51de9b92354"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#a460e33a6e957b2862103c51de9b92354">ordermanager_at_ordered_floor</a> (int <a class="el" href="main_8c.html#a53f0cf8d6c7426344a7336af4b06925a">current_floor</a>, int <a class="el" href="main_8c.html#a0d8675459cb6e82c10194cc12b8ce846">order_above</a>, int <a class="el" href="main_8c.html#a0d38da447588f7234ad833be0b003306">between_floors</a>)</td></tr>
+<tr class="memdesc:a460e33a6e957b2862103c51de9b92354"><td class="mdescLeft">&#160;</td><td class="mdescRight">checks if the current floor contains an order.  <a href="#a460e33a6e957b2862103c51de9b92354">More...</a><br /></td></tr>
+<tr class="separator:a460e33a6e957b2862103c51de9b92354"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09b8b707e6c2e146390ec6b6306e7480"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#a09b8b707e6c2e146390ec6b6306e7480">ordermanager_queue_is_empty_below</a> (int *queue, int <a class="el" href="main_8c.html#a53f0cf8d6c7426344a7336af4b06925a">current_floor</a>)</td></tr>
+<tr class="memdesc:a09b8b707e6c2e146390ec6b6306e7480"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the queue is empty below <code>current_floor</code>.  <a href="#a09b8b707e6c2e146390ec6b6306e7480">More...</a><br /></td></tr>
+<tr class="separator:a09b8b707e6c2e146390ec6b6306e7480"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bbda03134c052f807c4260c5b72d5e6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#a9bbda03134c052f807c4260c5b72d5e6">ordermanager_queue_is_empty_above</a> (int *queue, int <a class="el" href="main_8c.html#a53f0cf8d6c7426344a7336af4b06925a">current_floor</a>)</td></tr>
+<tr class="memdesc:a9bbda03134c052f807c4260c5b72d5e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the queue is empty above <code>current_floor</code> .  <a href="#a9bbda03134c052f807c4260c5b72d5e6">More...</a><br /></td></tr>
+<tr class="separator:a9bbda03134c052f807c4260c5b72d5e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afee2dada0440ec8dd5dfc3dfd0a55e21"><td class="memItemLeft" align="right" valign="top"><a id="afee2dada0440ec8dd5dfc3dfd0a55e21"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#afee2dada0440ec8dd5dfc3dfd0a55e21">ordermanager_poll_order_sensors</a> ()</td></tr>
 <tr class="memdesc:afee2dada0440ec8dd5dfc3dfd0a55e21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Polls all the floor sensors and puts them in the queue. Also turns on the order lights. <br /></td></tr>
@@ -121,16 +127,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orde
 <tr class="memitem:a1ac5420fa14000ed2b12b88dfa11f985"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#a1ac5420fa14000ed2b12b88dfa11f985">ordermanager_order_above_or_below</a> (int <a class="el" href="main_8c.html#a53f0cf8d6c7426344a7336af4b06925a">current_floor</a>, int <a class="el" href="main_8c.html#a0d38da447588f7234ad833be0b003306">between_floors</a>, <a class="el" href="hardware_8h.html#a2167c399a24df296afc432bcb88228af">HardwareMovement</a> driving_direction)</td></tr>
 <tr class="memdesc:a1ac5420fa14000ed2b12b88dfa11f985"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if there are orders above or below the current floor.  <a href="#a1ac5420fa14000ed2b12b88dfa11f985">More...</a><br /></td></tr>
 <tr class="separator:a1ac5420fa14000ed2b12b88dfa11f985"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad42c02ab4e2e8f482043e622be2bc16c"><td class="memItemLeft" align="right" valign="top"><a id="ad42c02ab4e2e8f482043e622be2bc16c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#ad42c02ab4e2e8f482043e622be2bc16c">ordermanager_clear_queue</a> ()</td></tr>
-<tr class="memdesc:ad42c02ab4e2e8f482043e622be2bc16c"><td class="mdescLeft">&#160;</td><td class="mdescRight">sets all of the queue's entries to 0. Also turns all the order lights off. <br /></td></tr>
-<tr class="separator:ad42c02ab4e2e8f482043e622be2bc16c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09cfc228b31fb377266c34bc7d2615fd"><td class="memItemLeft" align="right" valign="top"><a id="a09cfc228b31fb377266c34bc7d2615fd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#a09cfc228b31fb377266c34bc7d2615fd">ordermanager_clear_queues</a> ()</td></tr>
+<tr class="memdesc:a09cfc228b31fb377266c34bc7d2615fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets all of the queue's entries to 0. Also turns all the order lights off. <br /></td></tr>
+<tr class="separator:a09cfc228b31fb377266c34bc7d2615fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae97f50a02cdaad404363cb043c77c1d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#ae97f50a02cdaad404363cb043c77c1d5">ordermanager_remove_order</a> (int floor, <a class="el" href="hardware_8h.html#a2167c399a24df296afc432bcb88228af">HardwareMovement</a> driving_direction)</td></tr>
-<tr class="memdesc:ae97f50a02cdaad404363cb043c77c1d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an order from the queue.  <a href="#ae97f50a02cdaad404363cb043c77c1d5">More...</a><br /></td></tr>
+<tr class="memdesc:ae97f50a02cdaad404363cb043c77c1d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an order from the queue in the <code>driving_direction</code> .  <a href="#ae97f50a02cdaad404363cb043c77c1d5">More...</a><br /></td></tr>
 <tr class="separator:ae97f50a02cdaad404363cb043c77c1d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a940b9a025d01b330d9cc804747318b20"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#a940b9a025d01b330d9cc804747318b20">ordermanager_queue_is_empty</a> ()</td></tr>
-<tr class="memdesc:a940b9a025d01b330d9cc804747318b20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the queue is empty.  <a href="#a940b9a025d01b330d9cc804747318b20">More...</a><br /></td></tr>
-<tr class="separator:a940b9a025d01b330d9cc804747318b20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71b71f86a2855128abc62620beba7cd7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ordermanager_8h.html#a71b71f86a2855128abc62620beba7cd7">ordermanager_queue_is_empty</a> (int *queue)</td></tr>
+<tr class="memdesc:a71b71f86a2855128abc62620beba7cd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the <code>queue</code> is empty.  <a href="#a71b71f86a2855128abc62620beba7cd7">More...</a><br /></td></tr>
+<tr class="separator:a71b71f86a2855128abc62620beba7cd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Module for managing orders, determining where to go and determining where to stop. </p>
@@ -174,8 +180,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orde
 
 </div>
 </div>
-<a id="a64d250f3410bbbed5aed91fc0f1e7c4c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64d250f3410bbbed5aed91fc0f1e7c4c">&#9670;&nbsp;</a></span>ordermanager_at_ordered_floor()</h2>
+<a id="a460e33a6e957b2862103c51de9b92354"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a460e33a6e957b2862103c51de9b92354">&#9670;&nbsp;</a></span>ordermanager_at_ordered_floor()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -184,8 +190,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orde
           <td class="memname">int ordermanager_at_ordered_floor </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>current_floor</em></td><td>)</td>
+          <td class="paramname"><em>current_floor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>order_above</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>between_floors</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -193,13 +215,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orde
 <p>checks if the current floor contains an order. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">current_floor</td><td>current floor. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">current_floor</td><td>The last registered floor of the elevator. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">order_above</td><td>Tells us if we have an order above, below or no order. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">between_floors</td><td>Parameter for knowing if we are below, above or at <code>current_floor</code>. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if we are at a floor with an order, 0 otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ordermanager_8c_source.html#l00017">17</a> of file <a class="el" href="ordermanager_8c_source.html">ordermanager.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ordermanager_8c_source.html#l00034">34</a> of file <a class="el" href="ordermanager_8c_source.html">ordermanager.c</a>.</p>
 
 </div>
 </div>
@@ -245,12 +269,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orde
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if next order is above, -1 if next order is below, 0 if there are no orders. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ordermanager_8c_source.html#l00061">61</a> of file <a class="el" href="ordermanager_8c_source.html">ordermanager.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ordermanager_8c_source.html#l00123">123</a> of file <a class="el" href="ordermanager_8c_source.html">ordermanager.c</a>.</p>
 
 </div>
 </div>
-<a id="a940b9a025d01b330d9cc804747318b20"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a940b9a025d01b330d9cc804747318b20">&#9670;&nbsp;</a></span>ordermanager_queue_is_empty()</h2>
+<a id="a71b71f86a2855128abc62620beba7cd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71b71f86a2855128abc62620beba7cd7">&#9670;&nbsp;</a></span>ordermanager_queue_is_empty()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -258,16 +282,103 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orde
         <tr>
           <td class="memname">int ordermanager_queue_is_empty </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>queue</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Checks if the queue is empty. </p>
+<p>Checks if the <code>queue</code> is empty. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue</td><td>The queue we are checking. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if empty, 0 otherwise. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="ordermanager_8c_source.html#l00008">8</a> of file <a class="el" href="ordermanager_8c_source.html">ordermanager.c</a>.</p>
+
+</div>
+</div>
+<a id="a9bbda03134c052f807c4260c5b72d5e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bbda03134c052f807c4260c5b72d5e6">&#9670;&nbsp;</a></span>ordermanager_queue_is_empty_above()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ordermanager_queue_is_empty_above </td>
+          <td>(</td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>queue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>current_floor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the queue is empty above <code>current_floor</code> . </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue</td><td>The queue we are checking. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">current_floor</td><td>The last registered floor of the elevator. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 if the <code>queue</code> is empty above <code>current_floor</code> , 0 otherwise. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="ordermanager_8c_source.html#l00017">17</a> of file <a class="el" href="ordermanager_8c_source.html">ordermanager.c</a>.</p>
+
+</div>
+</div>
+<a id="a09b8b707e6c2e146390ec6b6306e7480"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09b8b707e6c2e146390ec6b6306e7480">&#9670;&nbsp;</a></span>ordermanager_queue_is_empty_below()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ordermanager_queue_is_empty_below </td>
+          <td>(</td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>queue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>current_floor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the queue is empty below <code>current_floor</code>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue</td><td>The queue we are checking. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">current_floor</td><td>The last registered floor of the elevator. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 if the <code>queue</code> is empty below <code>current_floor</code>, 0 otherwise. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="ordermanager_8c_source.html#l00026">26</a> of file <a class="el" href="ordermanager_8c_source.html">ordermanager.c</a>.</p>
 
 </div>
 </div>
@@ -297,16 +408,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orde
       </table>
 </div><div class="memdoc">
 
-<p>Removes an order from the queue. </p>
+<p>Removes an order from the queue in the <code>driving_direction</code> . </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">floor</td><td>Floor to be removed </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">driving_direction</td><td>Elevator's driving direction. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">driving_direction</td><td>Up or down. Elevator's driving direction. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ordermanager_8c_source.html#l00114">114</a> of file <a class="el" href="ordermanager_8c_source.html">ordermanager.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ordermanager_8c_source.html#l00175">175</a> of file <a class="el" href="ordermanager_8c_source.html">ordermanager.c</a>.</p>
 
 </div>
 </div>

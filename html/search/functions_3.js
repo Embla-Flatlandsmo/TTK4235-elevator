@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['poll_5ffloor_5findicator',['poll_floor_indicator',['../main_8c.html#a887ea3f667e94b6bdedbd6c969eaf215',1,'main.c']]]
+  ['poll_5ffloor_5findicators',['poll_floor_indicators',['../main_8c.html#a79645cc2340c6bba30ca15efe595899a',1,'main.c']]]
 ];
