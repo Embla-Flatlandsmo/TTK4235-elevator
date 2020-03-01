@@ -18,9 +18,10 @@
 /**
  * @brief checks if the current floor contains an order.
  * @param[in] current_floor current floor.
+ * @param[in] driving_direction 
  * @return 1 if we are at a floor with an order, 0 otherwise.
 */
-int ordermanager_at_ordered_floor(int current_floor);
+int int ordermanager_at_ordered_floor(int current_floor, HardwareMovement driving_direction);
 
 /** 
  * @brief Polls all the floor sensors and puts them in the queue. Also turns on the order lights.
@@ -46,7 +47,7 @@ int ordermanager_order_above_or_below(int current_floor, int between_floors, Har
 /**
  * @brief sets all of the queue's entries to 0. Also turns all the order lights off.
  */
-void ordermanager_clear_queue();
+void ordermanager_clear_queues();
 
 /**
  * @brief Removes an order from the queue
@@ -59,6 +60,6 @@ void ordermanager_remove_order(int floor, HardwareMovement driving_direction);
  * @brief Checks if the queue is empty.
  * @return 1 if empty, 0 otherwise.
  */
-int ordermanager_queue_is_empty();
+int ordermanager_queue_is_empty(int* queue);
 
 #endif

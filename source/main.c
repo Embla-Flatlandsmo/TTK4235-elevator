@@ -147,7 +147,7 @@ int main(){
 
                 order_above = ordermanager_order_above_or_below(current_floor, between_floors, driving_direction);
 
-                if (ordermanager_at_ordered_floor(current_floor) && between_floors == ATFLOOR){
+                if (ordermanager_at_ordered_floor(current_floor, driving_direction) && between_floors == ATFLOOR){
                     hardware_command_door_open(1);
                     ordermanager_remove_order(current_floor, driving_direction);
                     timer = start_timer();
@@ -182,7 +182,7 @@ int main(){
                 break;
             
             case DRIVE_UP:
-                if (ordermanager_at_ordered_floor(current_floor) && (between_floors == ATFLOOR)) {
+                if (ordermanager_at_ordered_floor(current_floor, driving_direction) && (between_floors == ATFLOOR)) {
                     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
                     current_state = IDLE;
                     break;
@@ -190,7 +190,7 @@ int main(){
                 break;
 
             case DRIVE_DOWN:
-                if (ordermanager_at_ordered_floor(current_floor) && (between_floors == ATFLOOR)) {
+                if (ordermanager_at_ordered_floor(current_floor, driving_direction) && (between_floors == ATFLOOR)) {
                     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
                     current_state = IDLE;
                     break;
@@ -203,7 +203,7 @@ int main(){
                     stopped_between = 1;
                 }
                 
-                ordermanager_clear_queue();
+                ordermanager_clear_queues();
                 hardware_command_stop_light(1);
                 timer = start_timer();
                 hardware_command_movement(HARDWARE_MOVEMENT_STOP);
