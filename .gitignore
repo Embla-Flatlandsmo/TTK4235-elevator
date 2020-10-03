@@ -1,0 +1,5 @@
+*.html
+html.*
+latex.*
+build.*
+oppgave.pdf
