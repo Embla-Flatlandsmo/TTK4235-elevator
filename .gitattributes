@@ -1,0 +1,7 @@
+build/* linguist-generated
+.vscode/* linguist-generated
+html/* linguist-documentation
+images/* linguist-documentation
+latex/* linguist-documentation
+oppgave.pdf linguist-documentation
+rapport.pdf linguist-documentation
